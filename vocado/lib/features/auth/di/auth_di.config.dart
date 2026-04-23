@@ -21,6 +21,22 @@ import 'package:vocado/features/auth/domain/repositories/auth_repository_domain.
     as _i272;
 import 'package:vocado/features/auth/domain/use_cases/auth_use_case.dart'
     as _i970;
+import 'package:vocado/features/auth/sub/login/data/datasources/login_remote_data_source.dart'
+    as _i1020;
+import 'package:vocado/features/auth/sub/login/data/repositories/login_repository_data.dart'
+    as _i326;
+import 'package:vocado/features/auth/sub/login/domain/repositories/login_repository_domain.dart'
+    as _i595;
+import 'package:vocado/features/auth/sub/login/domain/use_cases/login_use_case.dart'
+    as _i285;
+import 'package:vocado/features/auth/sub/sign_up/data/datasources/sign_up_remote_data_source.dart'
+    as _i975;
+import 'package:vocado/features/auth/sub/sign_up/data/repositories/sign_up_repository_data.dart'
+    as _i246;
+import 'package:vocado/features/auth/sub/sign_up/domain/repositories/sign_up_repository_domain.dart'
+    as _i404;
+import 'package:vocado/features/auth/sub/sign_up/domain/use_cases/sign_up_use_case.dart'
+    as _i161;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -29,17 +45,41 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i1020.BaseLoginRemoteDataSource>(
+      () => _i1020.LoginRemoteDataSource(
+        gh<_i140.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
     gh.lazySingleton<_i906.BaseAuthRemoteDataSource>(
       () => _i906.AuthRemoteDataSource(
         gh<_i140.LocalKeysService>(),
         gh<_i454.SupabaseClient>(),
       ),
     );
+    gh.lazySingleton<_i975.BaseSignUpRemoteDataSource>(
+      () => _i975.SignUpRemoteDataSource(
+        gh<_i140.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
+    gh.lazySingleton<_i404.SignUpRepositoryDomain>(
+      () => _i246.SignUpRepositoryData(gh<_i975.BaseSignUpRemoteDataSource>()),
+    );
     gh.lazySingleton<_i272.AuthRepositoryDomain>(
       () => _i694.AuthRepositoryData(gh<_i906.BaseAuthRemoteDataSource>()),
     );
+    gh.lazySingleton<_i161.SignUpUseCase>(
+      () => _i161.SignUpUseCase(gh<_i404.SignUpRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i595.LoginRepositoryDomain>(
+      () => _i326.LoginRepositoryData(gh<_i1020.BaseLoginRemoteDataSource>()),
+    );
     gh.lazySingleton<_i970.AuthUseCase>(
       () => _i970.AuthUseCase(gh<_i272.AuthRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i285.LoginUseCase>(
+      () => _i285.LoginUseCase(gh<_i595.LoginRepositoryDomain>()),
     );
     return this;
   }
