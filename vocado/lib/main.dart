@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'core/setup.dart';
-import 'core/theme/app_theme.dart';
 import 'core/di/configure_dependencies.dart';
 import 'core/navigation/app_router.dart';
 
@@ -35,8 +34,6 @@ class MainApp extends StatelessWidget {
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,
-           theme: AppTheme.light,
-          // themeMode: state.themeMode,
           debugShowCheckedModeBanner: false,
         );
       },
