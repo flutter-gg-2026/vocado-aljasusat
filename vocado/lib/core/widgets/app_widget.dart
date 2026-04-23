@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'app_card.dart';
 import 'app_button.dart';
 import 'app_input.dart';
-import 'app_title.dart';
+import 'app_text.dart';
 
-enum AppWidgetType { card, button, input, title }
+enum AppWidgetType { card, button, input, text }
 
 class AppWidget extends StatelessWidget {
   final AppWidgetType type;
@@ -53,10 +53,10 @@ class AppWidget extends StatelessWidget {
     );
   }
 
-  factory AppWidget.title({required String title}) {
+  factory AppWidget.text({required String text}) {
     return AppWidget._(
-      type: AppWidgetType.title,
-      title: title,
+      type: AppWidgetType.text,
+      title: text,
     );
   }
 
@@ -69,7 +69,7 @@ class AppWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (title != null) ...[
-                AppTitle(title!),
+                AppText(title!),
                 const SizedBox(height: 10),
               ],
               child!,
@@ -89,8 +89,8 @@ class AppWidget extends StatelessWidget {
           controller: controller,
         );
 
-      case AppWidgetType.title:
-        return AppTitle(title!);
+      case AppWidgetType.text:
+        return AppText(title!);
     }
   }
 }

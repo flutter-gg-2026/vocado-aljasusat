@@ -20,7 +20,7 @@ class TaskViewerFeatureScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppWidget.title(title: "Tasks"),
+            AppWidget.text(text: "Tasks"),
             const SizedBox(height: 10),
         
             AppWidget.card(
