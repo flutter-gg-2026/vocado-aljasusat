@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sizer/sizer.dart';
+import 'package:vocado/core/theme/app_color.dart';
 import 'package:vocado/features/auth/sub/login/presentation/cubit/login_cubit.dart';
-
 
 class LoginFeatureWidget extends StatelessWidget {
   const LoginFeatureWidget({super.key});
@@ -13,10 +14,33 @@ class LoginFeatureWidget extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final _ = context.read<LoginCubit>();
-          return Column(children: [
-              
-              ],
-            );
+          return Scaffold(
+            body: Container(
+              height: 100.h,
+              width: 100.sw,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: AppColors.backgroundGradient,
+                  begin: .bottomLeft,
+                  end: .topRight,
+                  stops: [0.0, 0.35, 0.7, 1.0],
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: .bottomLeft,
+                    radius: 2,
+                    colors: [
+                      Color.fromARGB(255, 252, 255, 61).withValues(alpha: 0.15),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
+                child: Container(),
+              ),
+            ),
+          );
         },
       ),
     );
