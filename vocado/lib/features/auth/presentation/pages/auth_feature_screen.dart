@@ -1,6 +1,7 @@
 import 'package:any_image_view/any_image_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
@@ -36,7 +37,7 @@ class AuthFeatureScreen extends StatelessWidget {
             ),
           ),
           child: Column(
-            spacing: 20,
+            spacing: 30,
             children: [
               Positioned(
                 right: 0,
@@ -75,13 +76,10 @@ class AuthFeatureScreen extends StatelessWidget {
                     ),
                   );
                 },
-                child: Container(
-                  height: 20.h,
+                child: GlassContainer.frostedGlass(
+                  height: 10.h,
                   width: 20.sw,
-                  decoration: BoxDecoration(
-                    shape: .circle,
-                    color: AppColors.textMain,
-                  ),
+                  shape: .circle,
                   child: Icon(Icons.arrow_forward, size: 40),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/features/auth/sub/sign/presentation/cubit/sign_cubit.dart';
@@ -37,7 +38,12 @@ class SignFeatureWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                child: Container(),
+                child: GlassContainer.frostedGlass(
+                  width: 80.sw,
+                  height: 50.h,
+                  padding: EdgeInsets.all(16),
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             ),
           );
