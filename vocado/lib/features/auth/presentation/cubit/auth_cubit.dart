@@ -7,21 +7,31 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(this._authUseCase) : super(AuthInitialState());
 
+  bool isLogin = true;
+
+  void changeAuthMode(bool value) {
+    isLogin = value;
+    emit(AuthModeChangedState(isLogin: isLogin));
+  }
+
   Future<void> getAuthMethod() async {
+    emit(AuthLoadingState());
+
     final result = await _authUseCase.getAuth();
+
     result.when(
       (success) {
-        //here is when success result
+        emit(AuthSuccessState());
       },
       (whenError) {
-       //here is when error result
+        emit(AuthErrorState(message: whenError.message));
       },
     );
   }
 
   @override
+  // ignore: unnecessary_overrides
   Future<void> close() {
-    //here is when close cubit
     return super.close();
   }
 }

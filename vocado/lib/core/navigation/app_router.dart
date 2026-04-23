@@ -9,18 +9,12 @@ import 'package:vocado/features/task_creator/presentation/pages/task_creator_fea
 import 'package:vocado/features/task_creator/presentation/cubit/task_creator_cubit.dart';
 import 'package:vocado/features/task_viewer/presentation/pages/task_viewer_feature_screen.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
+import 'package:vocado/features/splash/presentation/pages/splash_feature_screen.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.auth,
+    initialLocation: Routes.splash,
     routes: [
-      GoRoute(
-        path: Routes.splash,
-        builder: (context, state) {
-          return Scaffold(body: Center(child: Text("splash screen")));
-        }, // SplashScreen
-      ),
-
       GoRoute(
         path: Routes.auth,
         builder: (context, state) => BlocProvider(
@@ -43,6 +37,11 @@ class AppRouter {
           create: (context) => TaskViewerCubit(GetIt.I.get()),
           child: const TaskViewerFeatureScreen(),
         ),
+      ),
+
+      GoRoute(
+        path: Routes.splash,
+        builder: (context, state) => const SplashFeatureScreen(),
       ),
     ],
 

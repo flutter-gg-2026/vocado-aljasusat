@@ -1,17 +1,19 @@
-import 'package:any_image_view/any_image_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
-import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:vocado/features/auth/sub/sign/presentation/pages/sign_feature_widget.dart';
+import 'package:vocado/features/auth/presentation/widgets/auth_switch_widget.dart';
+import 'package:vocado/features/auth/presentation/widgets/login_widget.dart';
+import 'package:vocado/features/auth/presentation/widgets/signup_content_widget.dart';
 
-class AuthFeatureScreen extends StatelessWidget {
+class AuthFeatureScreen extends HookWidget {
   const AuthFeatureScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    final _ = context.read<AuthCubit>();
+    final isLogin = useState(true);
 
     return Scaffold(
       body: Container(
@@ -36,54 +38,56 @@ class AuthFeatureScreen extends StatelessWidget {
               ],
             ),
           ),
-          child: Column(
-            spacing: 30,
-            children: [
-              Positioned(
-                right: 0,
-                top: 0,
-                child: AnyImageView(imagePath: 'assets/images/bg.png'),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Align(
-                  alignment: .centerStart,
-                  child: RichText(
-                    text: TextSpan(
-                      style: TextStyle(color: AppColors.textMain, fontSize: 45),
-                      children: <TextSpan>[
-                        TextSpan(text: 'Transform\nyour '),
-                        TextSpan(
-                          text: 'voice',
-                          style: TextStyle(fontWeight: .bold),
-                        ),
-                        TextSpan(text: ' into productive '),
-                        TextSpan(
-                          text: 'action.',
-                          style: TextStyle(fontWeight: .bold),
-                        ),
-                      ],
+          child: Center(
+            child: GlassContainer.frostedGlass(
+              width: 85.sw,
+              height: 50.h,
+              padding: EdgeInsets.all(20),
+              borderRadius: BorderRadius.circular(24),
+              blur: 15,
+              borderColor: Colors.white.withValues(alpha: 0.2),
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  AuthSwitchWidget(
+                    isLogin: isLogin.value,
+                    onLoginTap: () {
+                      isLogin.value = true;
+                    },
+                    onSignUpTap: () {
+                      isLogin.value = false;
+                    },
+                  ),
+                  Gap(20),
+                  Text(
+                    isLogin.value ? 'Welcome Back' : 'Create Account',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignFeatureWidget(),
+                  Gap(10),
+                  Text(
+                    isLogin.value
+                        ? 'Log in to continue'
+                        : 'Sign up to create your account',
+                    style: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.7),
+                      fontSize: 14,
                     ),
-                  );
-                },
-                child: GlassContainer.frostedGlass(
-                  height: 10.h,
-                  width: 20.sw,
-                  shape: .circle,
-                  child: Icon(Icons.arrow_forward, size: 40),
-                ),
+                  ),
+                  Gap(15),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: isLogin.value
+                          ? LoginContentWidget()
+                          : SignUpContentWidget(),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

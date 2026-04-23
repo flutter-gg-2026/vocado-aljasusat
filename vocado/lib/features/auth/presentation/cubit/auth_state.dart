@@ -8,7 +8,16 @@ abstract class AuthState extends Equatable {
 }
 
 class AuthInitialState extends AuthState {}
+
 class AuthSuccessState extends AuthState {}
+
+class AuthLoadingState extends AuthState {}
+
+class AuthModeChangedState extends AuthState {
+  final bool isLogin;
+
+  const AuthModeChangedState({required this.isLogin});
+}
 
 class AuthErrorState extends AuthState {
   final String message;
@@ -16,4 +25,3 @@ class AuthErrorState extends AuthState {
   @override
   List<Object?> get props => [message];
 }
-
