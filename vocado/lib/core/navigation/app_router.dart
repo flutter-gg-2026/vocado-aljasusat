@@ -10,6 +10,7 @@ import 'package:vocado/features/task_creator/presentation/cubit/task_creator_cub
 import 'package:vocado/features/task_viewer/presentation/pages/task_viewer_feature_screen.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 
+
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: Routes.taskViewer,
@@ -44,7 +45,9 @@ class AppRouter {
           child: const TaskViewerFeatureScreen(),
         ),
       ),
-    ],
+    
+  
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

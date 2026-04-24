@@ -5,4 +5,5 @@ class Routes {
   static const String taskCreator = '/taskCreator';
   static const String askViewer = '/askViewer';
   static const String taskViewer = '/taskViewer';
+  static const String taskFilterSection = '/taskFilterSection';
 }

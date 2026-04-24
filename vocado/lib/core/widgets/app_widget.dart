@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vocado/core/theme/app_color.dart';
 import 'app_card.dart';
 import 'app_button.dart';
 import 'app_input.dart';
@@ -13,21 +14,31 @@ class AppWidget extends StatelessWidget {
   final Widget? child;
   final VoidCallback? onTap;
   final TextEditingController? controller;
+final int? maxLines;
+final TextOverflow? overflow;
+final double? fontSize;
+final FontWeight? fontWeight;
+final Color? color;
+const AppWidget._({
+  required this.type,
+  this.title,
+  this.hint,
+  this.child,
+  this.onTap,
+  this.controller,
+  this.maxLines,
+  this.overflow,
+  this.fontSize,
+  this.fontWeight,
+  this.color,
+});
 
-  const AppWidget._({
-    required this.type,
-    this.title,
-    this.hint,
-    this.child,
-    this.onTap,
-    this.controller,
-  });
-
-  factory AppWidget.card({required Widget child, String? title}) {
+  factory AppWidget.card({required Widget child, String? title , VoidCallback? onTap,}) {
     return AppWidget._(
       type: AppWidgetType.card,
       child: child,
       title: title,
+      onTap: onTap,
     );
   }
 
@@ -53,18 +64,31 @@ class AppWidget extends StatelessWidget {
     );
   }
 
-  factory AppWidget.text({required String text}) {
-    return AppWidget._(
-      type: AppWidgetType.text,
-      title: text,
-    );
-  }
+  factory AppWidget.text({
+  required String text,
+  int? maxLines,
+  TextOverflow? overflow,
+  double? fontSize,
+  FontWeight? fontWeight,
+  Color? color,
+}) {
+  return AppWidget._(
+    type: AppWidgetType.text,
+    title: text,
+    maxLines: maxLines,
+    overflow: overflow,
+    fontSize: fontSize,
+    fontWeight: fontWeight,
+    color: color,
+  );
+}
 
   @override
   Widget build(BuildContext context) {
     switch (type) {
       case AppWidgetType.card:
         return AppCard(
+          onTap: onTap,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,9 +112,15 @@ class AppWidget extends StatelessWidget {
           hint: hint!,
           controller: controller,
         );
-
-      case AppWidgetType.text:
-        return AppText(title!);
+case AppWidgetType.text:
+  return AppText(
+    title!,
+    maxLines: maxLines,
+    overflow: overflow,
+    fontSize: fontSize ?? 15,
+    fontWeight: fontWeight ?? FontWeight.bold,
+    color: color ?? AppColors.textMain,
+  );
     }
   }
 }

@@ -1,27 +1,71 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vocado/features/task_viewer/domain/use_cases/task_viewer_use_case.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_state.dart';
+import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
 
 class TaskViewerCubit extends Cubit<TaskViewerState> {
-  final TaskViewerUseCase _taskViewerUseCase;
+  final TaskViewerUseCase _useCase;
 
-  TaskViewerCubit(this._taskViewerUseCase) : super(TaskViewerInitialState());
+  TaskViewerCubit(this._useCase) : super(TaskViewerInitialState());
 
-  Future<void> getTaskViewerMethod() async {
-    final result = await _taskViewerUseCase.getTaskViewer();
+  bool isExpanded = false;
+
+  Future<void> getTasks() async {
+    emit(TaskViewerLoadingState());
+
+    final result = await _useCase.getTaskViewer();
+
     result.when(
       (success) {
-        //here is when success result
+        final (user, tasks) = success;
+
+        emit(TaskViewerSuccessState(
+          user: user,
+          tasks: tasks,
+          isExpanded: isExpanded,
+        ));
       },
-      (whenError) {
-       //here is when error result
+      (error) {
+        emit(const TaskViewerErrorState(message: "Something went wrong"));
       },
     );
   }
 
-  @override
-  Future<void> close() {
-    //here is when close cubit
-    return super.close();
+  void toggleViewAll() {
+    if (state is TaskViewerSuccessState) {
+      final current = state as TaskViewerSuccessState;
+
+      isExpanded = !isExpanded;
+
+      emit(TaskViewerSuccessState(
+        user: current.user,
+        tasks: current.tasks,
+        isExpanded: isExpanded,
+      ));
+    }
+  }
+
+  void updateStatus(int id, String status) {
+    if (state is TaskViewerSuccessState) {
+      final current = state as TaskViewerSuccessState;
+
+      final updatedTasks = current.tasks.map((task) {
+        if (task.id == id) {
+          return TaskEntity(
+            id: task.id,
+            title: task.title,
+            date: task.date,
+            status: status,
+          );
+        }
+        return task;
+      }).toList();
+
+      emit(TaskViewerSuccessState(
+        user: current.user,
+        tasks: updatedTasks,
+        isExpanded: current.isExpanded,
+      ));
+    }
   }
 }
