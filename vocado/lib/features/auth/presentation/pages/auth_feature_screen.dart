@@ -39,53 +39,59 @@ class AuthFeatureScreen extends HookWidget {
             ),
           ),
           child: Center(
-            child: GlassContainer.frostedGlass(
+            child: AnimatedContainer(
+              duration:  Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
               width: 85.sw,
-              height: 50.h,
-              padding: EdgeInsets.all(20),
-              borderRadius: BorderRadius.circular(24),
-              blur: 15,
-              borderColor: Colors.white.withValues(alpha: 0.2),
-              child: Column(
-                crossAxisAlignment: .start,
-                children: [
-                  AuthSwitchWidget(
-                    isLogin: isLogin.value,
-                    onLoginTap: () {
-                      isLogin.value = true;
-                    },
-                    onSignUpTap: () {
-                      isLogin.value = false;
-                    },
-                  ),
-                  Gap(20),
-                  Text(
-                    isLogin.value ? 'Welcome Back' : 'Create Account',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+              height: isLogin.value ? 45.h : 60.h,
+              child: GlassContainer.frostedGlass(
+                width: 85.sw,
+                height:  isLogin.value ? 50.h : 62.h,
+                padding: EdgeInsets.all(20),
+                borderRadius: BorderRadius.circular(24),
+                blur: 15,
+                borderColor: AppColors.textMain.withValues(alpha: 0.2),
+                child: Column(
+                  crossAxisAlignment: .start,
+                  children: [
+                    AuthSwitchWidget(
+                      isLogin: isLogin.value,
+                      onLoginTap: () {
+                        isLogin.value = true;
+                      },
+                      onSignUpTap: () {
+                        isLogin.value = false;
+                      },
                     ),
-                  ),
-                  Gap(10),
-                  Text(
-                    isLogin.value
-                        ? 'Log in to continue'
-                        : 'Sign up to create your account',
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.7),
-                      fontSize: 14,
+                    Gap(20),
+                    Text(
+                      isLogin.value ? 'Welcome Back' : 'Create Account',
+                      style: TextStyle(
+                        color: AppColors.textMain,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Gap(15),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: isLogin.value
-                          ? LoginContentWidget()
-                          : SignUpContentWidget(),
+                    Gap(10),
+                    Text(
+                      isLogin.value
+                          ? 'Log in to continue'
+                          : 'Sign up to create your account',
+                      style: TextStyle(
+                        color: AppColors.textMain.withValues(alpha: 0.7),
+                        fontSize: 14,
+                      ),
                     ),
-                  ),
-                ],
+                    Gap(15),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: isLogin.value
+                            ? LoginContentWidget()
+                            : SignUpContentWidget(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

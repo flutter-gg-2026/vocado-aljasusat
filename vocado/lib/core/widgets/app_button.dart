@@ -15,7 +15,11 @@ class AppButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(fixedSize: Size(100.sw, 45)),
       child: Text(
         title,
-        style: TextStyle(fontWeight: .bold, color: AppColors.background),
+        style: TextStyle(
+          fontWeight: .bold,
+          color: AppColors.textButton,
+          fontSize: 18,
+        ),
       ),
     );
   }
