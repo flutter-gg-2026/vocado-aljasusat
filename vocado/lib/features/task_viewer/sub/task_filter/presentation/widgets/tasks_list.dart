@@ -16,7 +16,6 @@ class TasksList extends StatelessWidget {
     return BlocBuilder<TaskFilterCubit, TaskFilterState>(
       builder: (context, state) {
         if (state is TaskFilterLoadedState) {
-
           final now = DateTime.now();
 
           final filteredTasks = state.tasks.where((task) {
@@ -25,7 +24,6 @@ class TasksList extends StatelessWidget {
             final isLate = diff.isNegative;
             final isDone = task.status == "done";
             final isInProgress = !isLate && !isDone;
-
             switch (filter) {
               case TaskFilter.inProgress:
                 return isInProgress;
@@ -44,7 +42,10 @@ class TasksList extends StatelessWidget {
             itemCount: filteredTasks.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 6,
+                ),
                 child: TaskItem(task: filteredTasks[index]),
               );
             },
