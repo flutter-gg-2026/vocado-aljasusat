@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/features/task_creator/presentation/cubit/task_creator_cubit.dart';
+import 'package:vocado/features/task_creator/presentation/widgets/filter_chip_widget.dart';
 
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
@@ -12,32 +14,7 @@ class AdminHomeScreen extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        toolbarHeight: 150,
-        centerTitle: false,
-        title: Column(
-          crossAxisAlignment: .start,
-          spacing: 10,
-          children: [
-            Text(
-              'Good Morning, Layan!',
-              style: TextStyle(
-                color: AppColors.textMain,
-                fontWeight: .bold,
-                fontSize: 28,
-              ),
-            ),
-            Text(
-              'What task is on your mind today?',
-              style: TextStyle(
-                color: AppColors.textMain.withValues(alpha: 0.6),
-                fontSize: 18,
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.transparent,
-      ),
+
       body: Container(
         height: 100.h,
         width: 100.sw,
@@ -60,10 +37,43 @@ class AdminHomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          child: Column(
-            children: [
-             
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: .start,
+              children: [
+                Gap(80),
+                Text(
+                  'Good Morning, Layan!',
+                  style: TextStyle(
+                    color: AppColors.textMain,
+                    fontWeight: .bold,
+                    fontSize: 30,
+                  ),
+                ),
+                Gap(15),
+                Text(
+                  'What task is on your mind today?',
+                  style: TextStyle(
+                    color: AppColors.textMain.withValues(alpha: 0.6),
+                    fontSize: 18,
+                  ),
+                ),
+                Gap(30),
+
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      FilterChipWidget(label: 'All', isSelected: true),
+                      FilterChipWidget(label: 'Drafts', isSelected: false),
+                      FilterChipWidget(label: 'Approved', isSelected: false),
+                      FilterChipWidget(label: 'Completed', isSelected: false),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
