@@ -112,7 +112,7 @@ class AdminHomeScreen extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: ['All', 'Drafts', 'Approved', 'Completed']
+                            children: ['All', 'Completed', 'In Progress', 'Late']
                                 .map((filter) {
                                   return FilterChipWidget(
                                     label: filter,
