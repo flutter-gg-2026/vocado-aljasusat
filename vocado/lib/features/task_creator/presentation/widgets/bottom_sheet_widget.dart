@@ -44,7 +44,11 @@ class BottomSheetWidget extends StatelessWidget {
             value: '2026-04-23',
           ),
           Gap(20),
-          DetailRow(icon: Icons.label_outline, label: 'Status', value: 'Draft'),
+          DetailRow(
+            icon: Icons.label_outline,
+            label: 'Status',
+            value: 'In Progress',
+          ),
         ],
       ),
     );

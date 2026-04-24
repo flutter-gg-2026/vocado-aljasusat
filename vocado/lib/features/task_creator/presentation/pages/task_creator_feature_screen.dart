@@ -24,10 +24,7 @@ class AdminHomeScreen extends StatelessWidget {
           assignee: 'User 1',
           gradient: AppColors.uiUxGradient,
           onTap: () {
-            context.showBottomSheet(
-              height: 55.h,
-              widget: BottomSheetWidget()
-            );
+            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
           },
         ),
         TaskCardWidget(
@@ -35,10 +32,7 @@ class AdminHomeScreen extends StatelessWidget {
           assignee: 'User 2',
           gradient: AppColors.dotNetGradient,
           onTap: () {
-            context.showBottomSheet(
-              height: 55.h,
-              widget: BottomSheetWidget()
-            );
+            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
           },
         ),
         TaskCardWidget(
@@ -46,10 +40,7 @@ class AdminHomeScreen extends StatelessWidget {
           assignee: 'User 3',
           gradient: AppColors.scheduleCardGradient,
           onTap: () {
-            context.showBottomSheet(
-              height: 55.h,
-              widget: BottomSheetWidget()
-            );
+            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
           },
         ),
         TaskCardWidget(
@@ -57,10 +48,7 @@ class AdminHomeScreen extends StatelessWidget {
           assignee: 'User 4',
           gradient: AppColors.digitalArtGradient,
           onTap: () {
-            context.showBottomSheet(
-              height: 55.h,
-              widget: BottomSheetWidget()
-            );
+            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
           },
         ),
       ];
@@ -112,15 +100,20 @@ class AdminHomeScreen extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: ['All', 'Completed', 'In Progress', 'Late']
-                                .map((filter) {
+                            children:
+                                [
+                                  'All',
+                                  'Completed',
+                                  'Pending',
+                                  'In Progress',
+                                  'Late',
+                                ].map((filter) {
                                   return FilterChipWidget(
                                     label: filter,
                                     isSelected: currentFilter == filter,
                                     onTap: () => cubit.changeFilter(filter),
                                   );
-                                })
-                                .toList(),
+                                }).toList(),
                           ),
                         ),
                         Gap(10),
@@ -132,13 +125,12 @@ class AdminHomeScreen extends StatelessWidget {
                 SliverPadding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   sliver: SliverGrid(
-                    gridDelegate:
-                        SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
-                          childAspectRatio: 0.85,
-                        ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 15,
+                      mainAxisSpacing: 15,
+                      childAspectRatio: 0.85,
+                    ),
                     delegate: SliverChildListDelegate(
                       filteredTasks(currentFilter),
                     ),

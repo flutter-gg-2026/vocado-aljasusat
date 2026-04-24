@@ -1,33 +1,29 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:vocado/core/services/local_keys_service.dart';
-import 'package:vocado/features/auth/data/models/auth_model.dart';
-import 'package:vocado/core/errors/network_exceptions.dart';
-
 
 abstract class BaseAuthRemoteDataSource {
-  Future<AuthModel> getAuth();
+  Future<User> login({required String email, required String password});
 }
-
 
 @LazySingleton(as: BaseAuthRemoteDataSource)
 class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
- 
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
-  
-  
 
-   AuthRemoteDataSource(this._localKeysService, this._supabase);
+  AuthRemoteDataSource(this._supabase);
 
+  @override
+  Future<User> login({required String email, required String password}) async {
+    final response = await _supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
 
+    final user = response.user;
 
-    @override
-  Future<AuthModel> getAuth() async {
-    try {
-      return AuthModel(id: 1, firstName: "Last Name", lastName: "First Name");
-    } catch (error) {
-     throw FailureExceptions.getException(error);
+    if (user == null) {
+      throw Exception("Login failed");
     }
+
+    return user;
   }
 }
