@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
+import 'package:vocado/core/widgets/bg_container.dart';
 import 'package:vocado/features/auth/presentation/widgets/auth_switch_widget.dart';
 import 'package:vocado/features/auth/presentation/widgets/login_widget.dart';
 import 'package:vocado/features/auth/presentation/widgets/signup_content_widget.dart';
@@ -16,82 +17,60 @@ class AuthFeatureScreen extends HookWidget {
     final isLogin = useState(true);
 
     return Scaffold(
-      body: Container(
-        height: 100.h,
-        width: 100.sw,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: AppColors.backgroundGradient,
-            begin: .bottomLeft,
-            end: .topRight,
-            stops: [0.0, 0.35, 0.7, 1.0],
-          ),
-        ),
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: RadialGradient(
-              center: .bottomLeft,
-              radius: 2,
-              colors: [
-                Color.fromRGBO(255, 252, 255, 61).withValues(alpha: 0.15),
-                Colors.transparent,
-              ],
-            ),
-          ),
-          child: Center(
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 300),
-              curve: Curves.easeInOut,
+      body: BgContainer(
+        child: Center(
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            width: 85.sw,
+            height: isLogin.value ? 45.h : 60.h,
+            child: GlassContainer.frostedGlass(
               width: 85.sw,
-              height: isLogin.value ? 45.h : 60.h,
-              child: GlassContainer.frostedGlass(
-                width: 85.sw,
-                height: isLogin.value ? 50.h : 62.h,
-                padding: EdgeInsets.all(20),
-                borderRadius: BorderRadius.circular(24),
-                blur: 15,
-                borderColor: AppColors.textMain.withValues(alpha: 0.2),
-                child: Column(
-                  crossAxisAlignment: .start,
-                  children: [
-                    AuthSwitchWidget(
-                      isLogin: isLogin.value,
-                      onLoginTap: () {
-                        isLogin.value = true;
-                      },
-                      onSignUpTap: () {
-                        isLogin.value = false;
-                      },
+              height: isLogin.value ? 50.h : 62.h,
+              padding: EdgeInsets.all(20),
+              borderRadius: BorderRadius.circular(24),
+              blur: 15,
+              borderColor: AppColors.textMain.withValues(alpha: 0.2),
+              child: Column(
+                crossAxisAlignment: .start,
+                children: [
+                  AuthSwitchWidget(
+                    isLogin: isLogin.value,
+                    onLoginTap: () {
+                      isLogin.value = true;
+                    },
+                    onSignUpTap: () {
+                      isLogin.value = false;
+                    },
+                  ),
+                  Gap(20),
+                  Text(
+                    isLogin.value ? 'Welcome Back' : 'Create Account',
+                    style: TextStyle(
+                      color: AppColors.textMain,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
-                    Gap(20),
-                    Text(
-                      isLogin.value ? 'Welcome Back' : 'Create Account',
-                      style: TextStyle(
-                        color: AppColors.textMain,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  Gap(10),
+                  Text(
+                    isLogin.value
+                        ? 'Log in to continue'
+                        : 'Sign up to create your account',
+                    style: TextStyle(
+                      color: AppColors.textMain.withValues(alpha: 0.7),
+                      fontSize: 14,
                     ),
-                    Gap(10),
-                    Text(
-                      isLogin.value
-                          ? 'Log in to continue'
-                          : 'Sign up to create your account',
-                      style: TextStyle(
-                        color: AppColors.textMain.withValues(alpha: 0.7),
-                        fontSize: 14,
-                      ),
+                  ),
+                  Gap(15),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: isLogin.value
+                          ? LoginContentWidget()
+                          : SignUpContentWidget(),
                     ),
-                    Gap(15),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: isLogin.value
-                            ? LoginContentWidget()
-                            : SignUpContentWidget(),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

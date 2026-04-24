@@ -8,7 +8,17 @@ abstract class TaskCreatorState extends Equatable {
 }
 
 class TaskCreatorInitialState extends TaskCreatorState {}
-class TaskCreatorSuccessState extends TaskCreatorState {}
+
+class TaskCreatorLoadingState extends TaskCreatorState {}
+
+class TaskCreatorSuccessState extends TaskCreatorState {
+  final String selectedFilter;
+
+  const TaskCreatorSuccessState({this.selectedFilter = 'All'});
+  
+  @override
+  List<Object?> get props => [selectedFilter];
+}
 
 class TaskCreatorErrorState extends TaskCreatorState {
   final String message;
@@ -16,4 +26,3 @@ class TaskCreatorErrorState extends TaskCreatorState {
   @override
   List<Object?> get props => [message];
 }
-
