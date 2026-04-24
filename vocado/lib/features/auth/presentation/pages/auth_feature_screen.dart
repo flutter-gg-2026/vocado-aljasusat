@@ -33,20 +33,20 @@ class AuthFeatureScreen extends HookWidget {
               center: .bottomLeft,
               radius: 2,
               colors: [
-                Color.fromARGB(255, 252, 255, 61).withValues(alpha: 0.15),
+                Color.fromRGBO(255, 252, 255, 61).withValues(alpha: 0.15),
                 Colors.transparent,
               ],
             ),
           ),
           child: Center(
             child: AnimatedContainer(
-              duration:  Duration(milliseconds: 300),
+              duration: Duration(milliseconds: 300),
               curve: Curves.easeInOut,
               width: 85.sw,
               height: isLogin.value ? 45.h : 60.h,
               child: GlassContainer.frostedGlass(
                 width: 85.sw,
-                height:  isLogin.value ? 50.h : 62.h,
+                height: isLogin.value ? 50.h : 62.h,
                 padding: EdgeInsets.all(20),
                 borderRadius: BorderRadius.circular(24),
                 blur: 15,

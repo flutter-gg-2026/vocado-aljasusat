@@ -11,10 +11,13 @@ class AppWidget extends StatelessWidget {
   final String? title;
   final String? hint;
   final Widget? child;
-  final VoidCallback? onTap;
+  final void Function()? onTap;
   final TextEditingController? controller;
   final IconData? icon;
   final bool obscureText;
+  final FontWeight? fontWeight;
+  final double? fontSize;
+  final Color? color;
 
   const AppWidget._({
     required this.type,
@@ -25,16 +28,16 @@ class AppWidget extends StatelessWidget {
     this.controller,
     this.icon,
     this.obscureText = false,
+    this.fontWeight,
+    this.fontSize,
+    this.color,
   });
 
   factory AppWidget.card({required Widget child, String? title}) {
     return AppWidget._(type: AppWidgetType.card, title: title, child: child);
   }
 
-  factory AppWidget.button({
-    required String title,
-    required VoidCallback onTap,
-  }) {
+  factory AppWidget.button({required String title, void Function()? onTap}) {
     return AppWidget._(type: AppWidgetType.button, title: title, onTap: onTap);
   }
 
@@ -53,8 +56,19 @@ class AppWidget extends StatelessWidget {
     );
   }
 
-  factory AppWidget.text({required String text}) {
-    return AppWidget._(type: AppWidgetType.text, title: text);
+  factory AppWidget.text({
+    required String text,
+    FontWeight? fontWeight,
+    double? fontSize,
+    Color? color,
+  }) {
+    return AppWidget._(
+      type: AppWidgetType.text,
+      title: text,
+      fontWeight: fontWeight,
+      fontSize: fontSize,
+      color: color,
+    );
   }
 
   @override

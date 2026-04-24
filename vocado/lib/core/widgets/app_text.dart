@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:vocado/core/theme/app_colors.dart';
 
 class AppText extends StatelessWidget {
   final String text;
   final double? fontSize;
-  const AppText({super.key, required this.text, this.fontSize});
+  final FontWeight? fontWeight;
+  final Color? color;
+
+  const AppText({
+    super.key,
+    required this.text,
+    this.fontSize,
+    this.fontWeight,
+    this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
       style: TextStyle(
-        color: AppColors.textMain,
+        color: color,
         fontSize: fontSize,
-        fontWeight: .bold,
+        fontWeight: fontWeight,
       ),
     );
   }

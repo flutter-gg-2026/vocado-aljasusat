@@ -11,7 +11,7 @@ class AppColors {
   static const Color cardBackground = Color(0xFF191A20);
   static const Color borderLight = Color(0xFF2C2D35);
   static const Color accentAccent = Color(0xFFE4E4E6);
-  static const Color calendarSelection = Color(0xFF1E3A8A);
+  static const Color calendarSelection = Color(0xFF3A1C6B);
 
   static const List<Color> backgroundGradient = [
     Color(0xFF2E1150),
@@ -21,7 +21,7 @@ class AppColors {
   ];
 
   static const List<Color> homeNavButtonGradient = [
-    Color(0xFFFFFFFF),
-    Color(0xFFE0E0E0),
+    Color.fromARGB(141, 255, 255, 255),
+    Color.fromARGB(222, 224, 224, 224),
   ];
 }

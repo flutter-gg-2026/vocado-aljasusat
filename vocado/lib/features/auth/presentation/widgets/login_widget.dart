@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vocado/core/navigation/routers.dart';
 import 'package:vocado/core/widgets/app_widget.dart';
 
 class LoginContentWidget extends StatelessWidget {
@@ -16,7 +18,12 @@ class LoginContentWidget extends StatelessWidget {
           icon: Icons.lock_outline,
           obscureText: true,
         ),
-        AppWidget.button(title: 'Log in', onTap: () {}),
+        AppWidget.button(
+          title: 'Log in',
+          onTap: () {
+            context.go(Routes.bottomNav);
+          },
+        ),
       ],
     );
   }

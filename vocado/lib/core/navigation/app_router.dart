@@ -10,6 +10,8 @@ import 'package:vocado/features/task_creator/presentation/cubit/task_creator_cub
 import 'package:vocado/features/task_viewer/presentation/pages/task_viewer_feature_screen.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:vocado/features/splash/presentation/pages/splash_feature_screen.dart';
+import 'package:vocado/features/bottom_nav/presentation/pages/bottom_nav_feature_screen.dart';
+import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -23,13 +25,6 @@ class AppRouter {
         ),
       ),
 
-      GoRoute(
-        path: Routes.taskCreator,
-        builder: (context, state) => BlocProvider(
-          create: (context) => TaskCreatorCubit(GetIt.I.get()),
-          child: const TaskCreatorFeatureScreen(),
-        ),
-      ),
 
       GoRoute(
         path: Routes.taskViewer,
@@ -42,6 +37,33 @@ class AppRouter {
       GoRoute(
         path: Routes.splash,
         builder: (context, state) => const SplashFeatureScreen(),
+      ),
+
+
+      ShellRoute(
+        builder: (context, state, child) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => BottomNavCubit(GetIt.I.get())),
+              BlocProvider(create: (_) => TaskCreatorCubit(GetIt.I.get())),
+            ],
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: Routes.bottomNav,
+            builder: (context, state) => BottomNav(),
+          ),
+
+          GoRoute(
+            path: Routes.taskCreator,
+            builder: (context, state) => BlocProvider(
+              create: (context) => TaskCreatorCubit(GetIt.I.get()),
+              child: const AdminHomeScreen(),
+            ),
+          ),
+        ],
       ),
     ],
 
