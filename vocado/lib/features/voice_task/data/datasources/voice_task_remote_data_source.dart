@@ -24,8 +24,9 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
     this._supabase,
   );
 
-  @override
-  Future<VoiceTaskModel> getVoiceTask() async {
+@override
+Future<VoiceTaskModel> getVoiceTask() async {
+  try {
     final path = await voiceService.stopRecord();
 
     if (path == null) {
@@ -34,7 +35,8 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
 
     final text = await speechService.processAudio(path);
 
-    print(" TRANSCRIBED TEXT: $text");
+    print("🎤 TRANSCRIBED TEXT: $text");
+
     if (text.isEmpty) {
       return VoiceTaskModel(
         title: "No voice detected",
@@ -48,9 +50,22 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
 
     final json = await geminiService.parseTask(text);
 
-    print(" TRANSCRIBED json: $json");
+    print("🔥 TRANSCRIBED json: $json");
+
     return VoiceTaskModel.fromJson(json);
+  } catch (e) {
+    print("❌ ERROR: $e");
+
+    return VoiceTaskModel(
+      title: "Error",
+      description: e.toString(),
+      assignedTo: "",
+      assignedBy: "",
+      deadline: DateTime.now(),
+      status: "failed",
+    );
   }
+}
 
   @override
   Future<void> startRecord() async {
