@@ -14,18 +14,10 @@ class MicButton extends StatelessWidget {
           colors: [Color(0xFF7F00FF), Color(0xFFE100FF)],
         ),
         boxShadow: [
-          BoxShadow(
-            color: Color(0x80E100FF),
-            blurRadius: 30,
-            spreadRadius: 2,
-          ),
+          BoxShadow(color: Color(0x80E100FF), blurRadius: 30, spreadRadius: 2),
         ],
       ),
-      child: const Icon(
-        Icons.mic,
-        color: Colors.white,
-        size: 36,
-      ),
+      child: const Icon(Icons.mic, color: Colors.white, size: 36),
     );
   }
 }

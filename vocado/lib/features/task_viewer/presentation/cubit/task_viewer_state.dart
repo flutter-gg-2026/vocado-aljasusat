@@ -1,38 +1,15 @@
-import 'package:equatable/equatable.dart';
-import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
-import 'package:vocado/features/task_viewer/domain/entities/user_entity.dart';
+part of 'task_viewer_cubit.dart';
 
-abstract class TaskViewerState extends Equatable {
-  const TaskViewerState();
+abstract class TaskViewerState {}
 
-  @override
-  List<Object?> get props => [];
-}
+class TaskInitial extends TaskViewerState {}
 
-class TaskViewerInitialState extends TaskViewerState {}
+class TaskLoading extends TaskViewerState {}
 
-class TaskViewerLoadingState extends TaskViewerState {}
-
-class TaskViewerSuccessState extends TaskViewerState {
-  final UserEntity user;
+class TaskLoaded extends TaskViewerState {
   final List<TaskEntity> tasks;
-  final bool isExpanded;
 
-  const TaskViewerSuccessState({
-    required this.user,
-    required this.tasks,
-    required this.isExpanded,
-  });
-
-  @override
-  List<Object?> get props => [user, tasks, isExpanded];
+  TaskLoaded({required this.tasks});
 }
 
-class TaskViewerErrorState extends TaskViewerState {
-  final String message;
-
-  const TaskViewerErrorState({required this.message});
-
-  @override
-  List<Object?> get props => [message];
-}
+class TaskError extends TaskViewerState {}

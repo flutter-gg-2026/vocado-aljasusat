@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-import 'package:vocado/core/navigation/app_router.dart';
-import 'package:vocado/core/navigation/routers.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 
 import 'package:vocado/features/voice_task/presentation/widgets/error_view.dart';
@@ -11,6 +8,7 @@ import 'package:vocado/features/voice_task/presentation/widgets/recording_view.d
 import 'package:vocado/features/voice_task/presentation/widgets/success_view.dart';
 import '../cubit/voice_task_cubit.dart';
 import '../cubit/voice_task_state.dart';
+
 class VoiceTaskFeatureScreen extends StatelessWidget {
   const VoiceTaskFeatureScreen({super.key});
 
@@ -26,16 +24,14 @@ class VoiceTaskFeatureScreen extends StatelessWidget {
           ),
         ),
         child: BlocListener<VoiceTaskCubit, VoiceTaskState>(
-         listener: (context, state) {
-  if (state is VoiceTaskSavedState) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Task saved successfully")),
-    );
+          listener: (context, state) {
+            if (state is VoiceTaskSavedState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Task saved successfully")),
+              );
 
-    context.read<VoiceTaskCubit>().reset(); 
-  }
-
-
+              context.read<VoiceTaskCubit>().reset();
+            }
           },
           child: BlocBuilder<VoiceTaskCubit, VoiceTaskState>(
             builder: (context, state) {

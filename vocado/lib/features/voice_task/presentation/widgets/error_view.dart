@@ -5,6 +5,7 @@ import 'package:vocado/core/theme/app_colors.dart';
 
 import 'package:vocado/core/widgets/app_widget.dart';
 import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';
+
 class ErrorView extends StatelessWidget {
   final String message;
 
@@ -27,10 +28,7 @@ class ErrorView extends StatelessWidget {
 
               const Gap(10),
 
-              AppWidget.text(
-                text: message,
-                color: AppColors.textSecondary,
-              ),
+              AppWidget.text(text: message, color: AppColors.textSecondary),
 
               const Gap(20),
 

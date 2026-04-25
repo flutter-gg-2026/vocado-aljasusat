@@ -6,6 +6,7 @@ import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/core/widgets/app_widget.dart';
 import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/mic_button.dart';
+
 class RecordingView extends StatelessWidget {
   const RecordingView({super.key});
 
@@ -25,7 +26,6 @@ class RecordingView extends StatelessWidget {
             child: AppWidget.text(
               text: "Speak clearly and describe the task",
               color: AppColors.textSecondary,
-             
             ),
           ),
           const Gap(50),
@@ -36,10 +36,7 @@ class RecordingView extends StatelessWidget {
             child: const MicButton(),
           ),
           const Gap(20),
-          AppWidget.text(
-            text: "Tap to stop",
-            color: AppColors.textSecondary,
-          ),
+          AppWidget.text(text: "Tap to stop", color: AppColors.textSecondary),
         ],
       ),
     );

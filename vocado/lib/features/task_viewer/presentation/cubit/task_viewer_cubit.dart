@@ -1,76 +1,79 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:vocado/features/task_viewer/domain/use_cases/task_viewer_use_case.dart';
-import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_state.dart';
-import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
+import '../../domain/entities/task_entity.dart';
+import '../../domain/use_cases/task_viewer_use_case.dart';
+
+part 'task_viewer_state.dart';
 
 @injectable
 class TaskViewerCubit extends Cubit<TaskViewerState> {
-  final TaskViewerUseCase _useCase;
+  final TaskUseCase useCase;
 
-  TaskViewerCubit(this._useCase) : super(TaskViewerInitialState()){
-     getTasks();
-  }
+  TaskViewerCubit(this.useCase) : super(TaskInitial());
 
-
-  bool isExpanded = false;
+  List<TaskEntity> allTasks = [];
 
   Future<void> getTasks() async {
-    emit(TaskViewerLoadingState());
+    emit(TaskLoading());
 
-    final result = await _useCase.getTaskViewer();
+    final result = await useCase.getTasks();
 
     result.when(
       (success) {
-        final (user, tasks) = success;
-
-        emit(TaskViewerSuccessState(
-          user: user,
-          tasks: tasks,
-          isExpanded: isExpanded,
-        ));
+        allTasks = success;
+        emit(TaskLoaded(tasks: success));
       },
       (error) {
-        emit(const TaskViewerErrorState(message: "Something went wrong"));
+        emit(TaskError());
       },
     );
   }
 
-  void toggleViewAll() {
-    if (state is TaskViewerSuccessState) {
-      final current = state as TaskViewerSuccessState;
+  Future<void> updateStatus(int id, String status) async {
+    await useCase.updateStatus(id, status);
 
-      isExpanded = !isExpanded;
+    final updated = allTasks.map((task) {
+      if (task.id == id) {
+        return TaskEntity(
+          id: task.id,
+          title: task.title,
+          description: task.description,
+          assignedBy: task.assignedBy,
+          deadline: task.deadline,
+          status: status,
+        );
+      }
+      return task;
+    }).toList();
 
-      emit(TaskViewerSuccessState(
-        user: current.user,
-        tasks: current.tasks,
-        isExpanded: isExpanded,
-      ));
-    }
+    allTasks = updated;
+    emit(TaskLoaded(tasks: updated));
   }
 
-  void updateStatus(int id, String status) {
-    if (state is TaskViewerSuccessState) {
-      final current = state as TaskViewerSuccessState;
+  List<TaskEntity> filterTasks(TaskStatus filter) {
+    final now = DateTime.now();
 
-      final updatedTasks = current.tasks.map((task) {
-        if (task.id == id) {
-          return TaskEntity(
-            id: task.id,
-            title: task.title,
-            date: task.date,
-            status: status,
-          );
-        }
-        return task;
-      }).toList();
+    return allTasks.where((task) {
+      final isLate = task.deadline.isBefore(now);
+      final isCompleted = task.status == "Completed";
+      final isInProgress = task.status == "In Progress";
+      final isPending = task.status == "Pending";
 
-      emit(TaskViewerSuccessState(
-        user: current.user,
-        tasks: updatedTasks,
-        isExpanded: current.isExpanded,
-      ));
-    }
+      switch (filter) {
+        case TaskStatus.Pending:
+          return isPending;
+
+        case TaskStatus.InProgress:
+          return isInProgress;
+
+        case TaskStatus.Completed:
+          return isCompleted;
+
+        case TaskStatus.Late:
+          return isLate;
+      }
+    }).toList();
   }
 }
+
+enum TaskStatus { Pending, InProgress, Completed, Late }

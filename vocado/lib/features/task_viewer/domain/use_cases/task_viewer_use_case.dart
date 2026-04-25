@@ -1,18 +1,20 @@
-import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
-import 'package:vocado/core/errors/failure.dart';
-import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
-import 'package:vocado/features/task_viewer/domain/entities/user_entity.dart';
-import 'package:vocado/features/task_viewer/domain/repositories/task_viewer_repository_domain.dart';
-
+import 'package:multiple_result/multiple_result.dart';
+import '../../../../core/errors/failure.dart';
+import '../entities/task_entity.dart';
+import '../repositories/task_viewer_repository_domain.dart';
 
 @lazySingleton
-class TaskViewerUseCase {
-  final TaskViewerRepositoryDomain _repositoryData;
+class TaskUseCase {
+  final TaskRepository repo;
 
-  TaskViewerUseCase(this._repositoryData);
+  TaskUseCase(this.repo);
 
-   Future<Result<(UserEntity, List<TaskEntity>), Failure>> getTaskViewer() async {
-    return _repositoryData.getTaskViewer();
+  Future<Result<List<TaskEntity>, Failure>> getTasks() {
+    return repo.getTasks();
+  }
+
+  Future<void> updateStatus(int id, String status) {
+    return repo.updateStatus(id, status);
   }
 }

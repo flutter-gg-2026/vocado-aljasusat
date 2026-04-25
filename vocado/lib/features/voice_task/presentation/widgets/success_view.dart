@@ -76,7 +76,7 @@ class SuccessView extends StatelessWidget {
             AppWidget.button(
               title: "Confirm Task",
               onTap: () {
-               context.read<VoiceTaskCubit>().saveTask(task);
+                context.read<VoiceTaskCubit>().saveTask(task);
               },
             ),
 

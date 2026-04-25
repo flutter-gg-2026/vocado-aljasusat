@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:vocado/features/task_viewer/sub/task_filter/domain/entities/task_filter_entity.dart';
+import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
 
-extension TaskStatusExtension on TaskFilterEntity {
+extension TaskStatusExtension on TaskEntity {
   String get statusText {
     final now = DateTime.now();
     final isLate = deadline.isBefore(now);
 
-    if (status == "done") return "Done";
+    if (status == "Completed") return "Completed";
     if (isLate) return "Late";
     return "In Progress";
   }
@@ -15,7 +15,7 @@ extension TaskStatusExtension on TaskFilterEntity {
     final now = DateTime.now();
     final isLate = deadline.isBefore(now);
 
-    if (status == "done") return Colors.green;
+    if (status == "Completed") return Colors.green;
     if (isLate) return Colors.red;
     return Colors.blue;
   }

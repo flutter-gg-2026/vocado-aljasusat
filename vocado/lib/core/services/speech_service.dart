@@ -54,7 +54,7 @@ class SpeechService {
 
       final status = response.data['status'];
 
-      if (status == 'done') {
+      if (status == 'Completed') {
         final text =
             response.data['result']?['transcription']?['full_transcript'] ?? '';
 

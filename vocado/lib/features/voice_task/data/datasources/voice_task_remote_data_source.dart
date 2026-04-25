@@ -26,15 +26,15 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
   );
 
   String mapStatus(String status) {
-  switch (status) {
-    case "done":
-      return "Completed";
-    case "late":
-      return "Late";
-    default:
-      return "Pending";
+    switch (status) {
+      case "Completed":
+        return "Completed";
+      case "late":
+        return "Late";
+      default:
+        return "Pending";
+    }
   }
-}
 
   @override
   Future<VoiceTaskModel> getVoiceTask() async {
@@ -71,8 +71,9 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
 
     final userName = response?['name'] ?? user.email ?? 'User';
 
-    final assigneeName =
-        (task.assignedTo.isNotEmpty) ? task.assignedTo : 'Unassigned';
+    final assigneeName = (task.assignedTo.isNotEmpty)
+        ? task.assignedTo
+        : 'Unassigned';
 
     await _supabase.from('task').insert({
       'user_id': user.id,
