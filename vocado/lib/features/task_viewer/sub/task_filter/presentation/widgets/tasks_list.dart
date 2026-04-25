@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vocado/core/widgets/loading_widget.dart';
 import 'package:vocado/features/task_viewer/sub/task_filter/presentation/cubit/task_filter_cubit.dart';
 import 'package:vocado/features/task_viewer/sub/task_filter/presentation/cubit/task_filter_state.dart';
 import 'package:vocado/features/task_viewer/sub/task_filter/presentation/widgets/task_item.dart';
@@ -35,14 +36,14 @@ class TasksList extends StatelessWidget {
           }).toList();
 
           if (filteredTasks.isEmpty) {
-            return const Center(child: Text("No tasks found"));
+            return Center(child: Text("No tasks found"));
           }
 
           return ListView.builder(
             itemCount: filteredTasks.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 6,
                 ),
@@ -53,10 +54,10 @@ class TasksList extends StatelessWidget {
         }
 
         if (state is TaskFilterErrorState) {
-          return const Center(child: Text("Something went wrong"));
+          return Center(child: Text("Something went wrong"));
         }
 
-        return const Center(child: CircularProgressIndicator());
+        return LoadingWidget();
       },
     );
   }

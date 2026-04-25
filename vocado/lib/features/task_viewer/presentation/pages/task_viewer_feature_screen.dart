@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/core/widgets/app_widget.dart';
+import 'package:vocado/core/widgets/loading_widget.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_state.dart';
 import 'package:vocado/features/task_viewer/presentation/widgets/top_task_card.dart';
@@ -38,7 +39,7 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
           child: BlocBuilder<TaskViewerCubit, TaskViewerState>(
             builder: (context, state) {
               if (state is TaskViewerLoadingState) {
-                return Center(child: CircularProgressIndicator());
+                return LoadingWidget();
               }
 
               if (state is TaskViewerSuccessState) {

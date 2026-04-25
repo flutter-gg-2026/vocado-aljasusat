@@ -46,6 +46,7 @@ class AppRouter {
             providers: [
               BlocProvider(create: (_) => BottomNavCubit(GetIt.I.get())),
               BlocProvider(create: (_) => TaskCreatorCubit(GetIt.I.get())),
+              BlocProvider(create: (_) => VoiceTaskCubit(GetIt.I.get())),
             ],
             child: child,
           );
@@ -63,15 +64,15 @@ class AppRouter {
               child: const AdminHomeScreen(),
             ),
           ),
-        ],
-      ),
 
-      GoRoute(
-        path: Routes.voiceTask,
-        builder: (context, state) => BlocProvider(
-          create: (context) => VoiceTaskCubit(GetIt.I.get()),
-          child: const VoiceTaskFeatureScreen(),
-        ),
+          GoRoute(
+            path: Routes.voiceTask,
+            builder: (context, state) => BlocProvider(
+              create: (context) => VoiceTaskCubit(GetIt.I.get()),
+              child: const VoiceTaskFeatureScreen(),
+            ),
+          ),
+        ],
       ),
     ],
 

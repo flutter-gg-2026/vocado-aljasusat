@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/core/widgets/app_widget.dart';
 import 'package:vocado/features/voice_task/domain/entities/voice_task_entity.dart';
@@ -15,11 +16,11 @@ class SuccessView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Gap(20),
+            Gap(20),
 
             AppWidget.text(
               text: "Review Task",
@@ -27,19 +28,19 @@ class SuccessView extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
 
-            const Gap(10),
+            Gap(10),
 
             AppWidget.text(
               text: "Please review and edit the task before confirming.",
               color: AppColors.textSecondary,
             ),
 
-            const Gap(30),
+            Gap(30),
 
             AppWidget.text(text: "Title"),
             AppWidget.text(text: task.title, color: AppColors.textSecondary),
 
-            const Gap(20),
+            Gap(20),
 
             AppWidget.text(text: "Description"),
             AppWidget.text(
@@ -47,7 +48,7 @@ class SuccessView extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
 
-            const Gap(20),
+            Gap(20),
 
             AppWidget.text(text: "Assigned To"),
             AppWidget.text(
@@ -55,7 +56,7 @@ class SuccessView extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
 
-            const Gap(20),
+            Gap(20),
 
             AppWidget.text(text: "Assigned By"),
             AppWidget.text(
@@ -63,7 +64,7 @@ class SuccessView extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
 
-            const Gap(20),
+            Gap(20),
 
             AppWidget.text(text: "Deadline"),
             AppWidget.text(
@@ -71,7 +72,7 @@ class SuccessView extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
 
-            const Spacer(),
+            Spacer(),
 
             AppWidget.button(
               title: "Confirm Task",
@@ -80,13 +81,24 @@ class SuccessView extends StatelessWidget {
               },
             ),
 
-            const Gap(10),
+            Gap(10),
 
-            AppWidget.button(
-              title: "Cancel",
-              onTap: () {
+            OutlinedButton(
+              onPressed: () {
                 context.read<VoiceTaskCubit>().reset();
               },
+              style: OutlinedButton.styleFrom(
+                fixedSize: Size(100.sw, 45),
+                side: BorderSide(color: AppColors.accentAccent),
+              ),
+              child: Text(
+                "Retake",
+                style: TextStyle(
+                  color: AppColors.textMain,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
             ),
           ],
         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vocado/core/theme/app_colors.dart';
+import 'package:vocado/core/widgets/loading_widget.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/error_view.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/idle_view.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/recording_view.dart';
@@ -15,7 +16,7 @@ class VoiceTaskFeatureScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: AppColors.backgroundGradient,
             begin: Alignment.bottomLeft,
@@ -25,15 +26,15 @@ class VoiceTaskFeatureScreen extends StatelessWidget {
         child: BlocBuilder<VoiceTaskCubit, VoiceTaskState>(
           builder: (context, state) {
             if (state is VoiceTaskLoadingState) {
-              return const Center(child: CircularProgressIndicator());
+              return LoadingWidget();
             }
 
             if (state is VoiceTaskInitialState) {
-              return const IdleView();
+              return IdleView();
             }
 
             if (state is VoiceTaskRecordingState) {
-              return const RecordingView();
+              return RecordingView();
             }
 
             if (state is VoiceTaskSuccessState) {
@@ -44,7 +45,7 @@ class VoiceTaskFeatureScreen extends StatelessWidget {
               return ErrorView(message: state.message);
             }
 
-            return const SizedBox();
+            return SizedBox();
           },
         ),
       ),
