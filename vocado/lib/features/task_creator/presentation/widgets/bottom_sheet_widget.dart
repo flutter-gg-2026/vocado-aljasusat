@@ -13,45 +13,95 @@ class BottomSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Task Details',
-            style: TextStyle(
-              color: AppColors.textButton,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: .start,
+          children: [
+            Text(
+              'Task Details',
+              style: TextStyle(
+                color: AppColors.textButton,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          Gap(10),
-          Text(
-            task.name,
-            style: TextStyle(
-              color: AppColors.calendarSelection,
-              fontSize: 22.sp,
-              fontWeight: FontWeight.bold,
+            Gap(10),
+            Text(
+              task.name,
+              style: TextStyle(
+                color: AppColors.calendarSelection,
+                fontSize: 22.sp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          Gap(30),
-          DetailRow(
-            icon: Icons.person_outline,
-            label: 'Assignee',
-            value: task.userId
-          ),
-          Gap(20),
-          DetailRow(
-            icon: Icons.calendar_today_outlined,
-            label: 'Due Date',
-            value: task.dueDate,
-          ),
-          Gap(20),
-          DetailRow(
-            icon: Icons.label_outline,
-            label: 'Status',
-            value: task.status,
-          ),
-        ],
+            Gap(15),
+            DetailRow(
+              icon: Icons.description_outlined,
+              label: 'Description',
+              value: task.description ?? 'No Description',
+            ),
+            Gap(20),
+        
+            DetailRow(
+              icon: Icons.person_outline,
+              label: 'Assignee',
+              value: task.assigneeName ?? task.userId,
+            ),
+            Gap(20),
+            DetailRow(
+              icon: Icons.calendar_today_outlined,
+              label: 'Due Date',
+              value: task.dueDate,
+            ),
+            Gap(20),
+            DetailRow(
+              icon: Icons.label_outline,
+              label: 'Status',
+              value: task.status,
+            ),
+            Gap(20),
+        
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: AppColors.error),
+                    ),
+                    child: Text(
+                      "Delete",
+                      style: TextStyle(
+                        color: AppColors.error,
+                        fontWeight: .w500,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+                Gap(5),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.calendarSelection,
+                    ),
+                    child: Text(
+                      "Edit",
+                      style: TextStyle(
+                        color: AppColors.textMain,
+                        fontWeight: .bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Gap(50),
+
+          ],
+        ),
       ),
     );
   }
@@ -77,7 +127,7 @@ class DetailRow extends StatelessWidget {
         Gap(15),
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Text(
                 label,
@@ -85,7 +135,6 @@ class DetailRow extends StatelessWidget {
               ),
               Text(
                 value,
-                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: AppColors.textButton,
                   fontSize: 16,

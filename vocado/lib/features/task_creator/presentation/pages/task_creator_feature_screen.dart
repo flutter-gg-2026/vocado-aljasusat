@@ -96,10 +96,10 @@ class AdminHomeScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               'All',
-                              'Completed',
-                              'Pending',
-                              'In Progress',
-                              'Late',
+                              'completed',
+                              'pending',
+                              'in Progress',
+                              'late',
                             ].map((filter) {
                               return FilterChipWidget(
                                 label: filter,
@@ -146,7 +146,7 @@ class AdminHomeScreen extends StatelessWidget {
 
                           return TaskCardWidget(
                             title: task.name,
-                            assignee: task.assignedBy!,
+                            assignee: task.assigneeName ?? task.userId,
                             gradient: getTaskGradient(index),
                             onTap: () {
                               context.showBottomSheet(

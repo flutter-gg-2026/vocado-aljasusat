@@ -45,7 +45,7 @@ class AppRouter {
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => BottomNavCubit(GetIt.I.get())),
-              BlocProvider(create: (_) => TaskCreatorCubit(GetIt.I.get())),
+              BlocProvider(create: (_) => TaskCreatorCubit(GetIt.I.get())..getTaskCreatorMethod()),
               BlocProvider(create: (_) => VoiceTaskCubit(GetIt.I.get())),
             ],
             child: child,
@@ -59,10 +59,7 @@ class AppRouter {
 
           GoRoute(
             path: Routes.taskCreator,
-            builder: (context, state) => BlocProvider(
-              create: (context) => TaskCreatorCubit(GetIt.I.get())..getTaskCreatorMethod(),
-              child: const AdminHomeScreen(),
-            ),
+            builder: (context, state) => const AdminHomeScreen(),
           ),
 
           GoRoute(

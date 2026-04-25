@@ -8,6 +8,7 @@ class TaskCreatorEntity extends Equatable {
   final String status;
   final String? assignedBy;
   final String? description;
+  final String? assigneeName;
 
   const TaskCreatorEntity({
     required this.id,
@@ -16,7 +17,7 @@ class TaskCreatorEntity extends Equatable {
     required this.dueDate,
     required this.status,
     this.assignedBy,
-    this.description,
+    this.description, this.assigneeName,
   });
 
   @override
@@ -28,5 +29,6 @@ class TaskCreatorEntity extends Equatable {
     status,
     assignedBy,
     description,
+    assigneeName
   ];
 }

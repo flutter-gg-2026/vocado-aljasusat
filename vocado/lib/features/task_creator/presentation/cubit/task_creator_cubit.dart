@@ -17,6 +17,7 @@ class TaskCreatorCubit extends Cubit<TaskCreatorState> {
 
     result.when(
       (success) {
+        print('TASKS COUNT: ${success.length}');
         allTasks = success;
         emit(TaskCreatorSuccessState(tasks: allTasks));
       },

@@ -31,6 +31,7 @@ extension TaskCreatorModelMapper on TaskCreatorModel {
       status: status,
       assignedBy: assignedBy,
       description: description,
+      assigneeName: assigneeName,
     );
   }
 }

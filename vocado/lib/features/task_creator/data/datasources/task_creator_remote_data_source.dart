@@ -7,7 +7,6 @@ abstract class BaseTaskCreatorRemoteDataSource {
   Future<List<TaskCreatorModel>> getTaskCreator();
 }
 
-
 @LazySingleton(as: BaseTaskCreatorRemoteDataSource)
 class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
   final SupabaseClient _supabase;
@@ -15,18 +14,37 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
   TaskCreatorRemoteDataSource(this._supabase);
 
   @override
-Future<List<TaskCreatorModel>> getTaskCreator() async {
-  try {
-    final response = await _supabase
-        .from('task')
-        .select()
-        .order('id', ascending: false);
+  Future<List<TaskCreatorModel>> getTaskCreator() async {
+    try {
+      final currentUser = _supabase.auth.currentUser;
 
-    return response
-        .map<TaskCreatorModel>((json) => TaskCreatorModel.fromJson(json))
-        .toList();
-  } catch (error) {
-    throw FailureExceptions.getException(error);
+      if (currentUser == null) {
+        throw Exception('Authentication required');
+      }
+
+      final response = await _supabase
+          .from('task')
+          .select('''
+      id,
+      name,
+      status,
+      due_date,
+      user_id,
+      assigned_by,
+      description,
+      users(name)
+    ''')
+          .order('id', ascending: false);
+
+      return response.map<TaskCreatorModel>((json) {
+        final data = Map<String, dynamic>.from(json);
+
+        data['assignee_name'] = data['users']?['name'];
+
+        return TaskCreatorModel.fromJson(data);
+      }).toList();
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
   }
-}
 }

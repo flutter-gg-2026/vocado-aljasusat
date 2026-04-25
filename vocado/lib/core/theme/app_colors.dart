@@ -13,6 +13,8 @@ class AppColors {
   static const Color accentAccent = Color(0xFFE4E4E6);
   static const Color calendarSelection = Color(0xFF3A1C6B);
 
+  static const Color error = Color.fromARGB(255, 107, 28, 28);
+
   static const List<Color> backgroundGradient = [
     Color(0xFF2E1150),
     Color(0xFF3A1C6B),
