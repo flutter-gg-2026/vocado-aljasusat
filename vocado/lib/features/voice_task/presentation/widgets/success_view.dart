@@ -76,7 +76,7 @@ class SuccessView extends StatelessWidget {
             AppWidget.button(
               title: "Confirm Task",
               onTap: () {
-                // Supabase
+               context.read<VoiceTaskCubit>().saveTask(task);
               },
             ),
 

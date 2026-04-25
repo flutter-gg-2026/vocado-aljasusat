@@ -6,6 +6,7 @@ import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.d
 import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_state.dart';
 import 'package:vocado/features/bottom_nav/presentation/widgets/bottom_nav_widget.dart';
 import 'package:vocado/features/task_creator/presentation/pages/task_creator_feature_screen.dart';
+import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
 
 class BottomNav extends StatelessWidget {
   BottomNav({super.key});
@@ -14,7 +15,7 @@ class BottomNav extends StatelessWidget {
 
   final List<Widget> screens = const [
     AdminHomeScreen(),
-    Center(child: Text('VoiceRecordScreen()'),),
+    VoiceTaskFeatureScreen(),
   ];
 
   @override
