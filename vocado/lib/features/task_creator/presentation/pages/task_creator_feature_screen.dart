@@ -17,23 +17,27 @@ class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
 
   String getTaskStatus(TaskCreatorEntity task) {
-    final dueDate = DateTime.tryParse(task.dueDate);
-    final today = DateTime.now();
-
-    if (dueDate == null) return task.status;
-
-    final isDeadlinePassed = dueDate.isBefore(
-      DateTime(today.year, today.month, today.day),
-    );
-
-    final isCompleted = task.status.toLowerCase() == 'Completed';
-
-    if (isDeadlinePassed && !isCompleted) {
-      return 'Late';
-    }
-
+  if (task.dueDate == null || task.dueDate!.isEmpty) {
     return task.status;
   }
+
+  final dueDate = DateTime.tryParse(task.dueDate!);
+  final today = DateTime.now();
+
+  if (dueDate == null) return task.status;
+
+  final isDeadlinePassed = dueDate.isBefore(
+    DateTime(today.year, today.month, today.day),
+  );
+
+  final isCompleted = task.status.toLowerCase() == 'completed';
+
+  if (isDeadlinePassed && !isCompleted) {
+    return 'Late';
+  }
+
+  return task.status;
+}
 
   List<Color> getTaskGradient(TaskCreatorEntity task, int index) {
     final status = getTaskStatus(task);
@@ -170,7 +174,7 @@ class AdminHomeScreen extends StatelessWidget {
                         final task = filteredTasks[index];
 
                         return TaskCardWidget(
-                          title: task.name,
+                          title: task.name ?? 'Untitled',
                           assignee: task.assigneeName ?? task.userId,
                           gradient: getTaskGradient(task, index),
                           onTap: () {

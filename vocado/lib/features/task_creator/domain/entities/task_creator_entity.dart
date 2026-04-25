@@ -3,8 +3,8 @@ import 'package:equatable/equatable.dart';
 class TaskCreatorEntity extends Equatable {
   final int id;
   final String userId;
-  final String name;
-  final String dueDate;
+  final String? name;
+  final String? dueDate;
   final String status;
   final String? assignedBy;
   final String? description;
@@ -13,9 +13,9 @@ class TaskCreatorEntity extends Equatable {
   const TaskCreatorEntity({
     required this.id,
     required this.userId,
-    required this.name,
-    required this.dueDate,
-    required this.status,
+    this.name,
+    this.dueDate,
+    this.status = 'Pending',
     this.assignedBy,
     this.description, this.assigneeName,
   });

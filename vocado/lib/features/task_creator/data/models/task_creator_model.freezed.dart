@@ -213,16 +213,16 @@ return $default(_that.id,_that.userId,_that.name,_that.dueDate,_that.status,_tha
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _TaskCreatorModel implements TaskCreatorModel {
-  const _TaskCreatorModel({required this.id, required this.userId, required this.name, required this.dueDate, this.status = 'Pending', this.assigneeName, this.assignedBy, this.description});
+  const _TaskCreatorModel({required this.id, this.userId = '', this.name = 'Untitled', this.dueDate = '', this.status = 'Pending', this.assigneeName, this.assignedBy, this.description});
   factory _TaskCreatorModel.fromJson(Map<String, dynamic> json) => _$TaskCreatorModelFromJson(json);
 
 @override final  int id;
-@override final  String userId;
-@override final  String name;
-@override final  String dueDate;
+@override@JsonKey() final  String userId;
+@override@JsonKey() final  String name;
+@override@JsonKey() final  String dueDate;
 @override@JsonKey() final  String status;
 @override final  String? assigneeName;
 @override final  String? assignedBy;

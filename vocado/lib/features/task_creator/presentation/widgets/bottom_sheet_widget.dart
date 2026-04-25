@@ -79,7 +79,7 @@ class BottomSheetWidget extends StatelessWidget {
                     final selectedDate = await showDatePicker(
                       context: dialogContext,
                       initialDate:
-                          DateTime.tryParse(task.dueDate) ?? DateTime.now(),
+                          DateTime.tryParse(task.dueDate!) ?? DateTime.now(),
                       firstDate: DateTime(2024),
                       lastDate: DateTime(2035),
                     );
@@ -141,7 +141,7 @@ class BottomSheetWidget extends StatelessWidget {
             ),
             Gap(10),
             Text(
-              task.name,
+              task.name ?? 'Untitled',
               style: TextStyle(
                 color: AppColors.calendarSelection,
                 fontSize: 22.sp,
@@ -164,7 +164,7 @@ class BottomSheetWidget extends StatelessWidget {
             DetailRow(
               icon: Icons.calendar_today_outlined,
               label: 'Due Date',
-              value: task.dueDate,
+              value: task.dueDate!,
             ),
             Gap(20),
             DetailRow(
