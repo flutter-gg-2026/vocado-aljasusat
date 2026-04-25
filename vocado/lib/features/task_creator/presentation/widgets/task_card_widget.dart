@@ -67,7 +67,7 @@ class TaskCardWidget extends StatelessWidget {
               style: TextStyle(
                 color: AppColors.textMain,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 20,
               ),
             ),
           ],

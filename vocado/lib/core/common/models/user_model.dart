@@ -11,6 +11,7 @@ abstract class UserModel with _$UserModel {
     required String id,
     required String name,
     required String email,
+    required String role,
   }) = _UserModel;
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
@@ -19,10 +20,6 @@ abstract class UserModel with _$UserModel {
 
 extension UserModelMapper on UserModel {
   UserEntity toEntity() {
-    return UserEntity(
-      id: id,
-      name: name,
-      email: email,
-    );
+    return UserEntity(id: id, name: name, email: email, role: role);
   }
 }

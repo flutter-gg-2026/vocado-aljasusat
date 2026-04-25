@@ -20,7 +20,7 @@ class AppRouter {
       GoRoute(
         path: Routes.auth,
         builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(GetIt.I.get()),
+          create: (context) => GetIt.I.get<AuthCubit>(),
           child: const AuthFeatureScreen(),
         ),
       ),

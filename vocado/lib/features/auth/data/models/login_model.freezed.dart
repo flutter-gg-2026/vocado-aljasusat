@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$LoginModel {
 
- String get id; String get email;
+ String get id; String get email; String get role;
 /// Create a copy of LoginModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $LoginModelCopyWith<LoginModel> get copyWith => _$LoginModelCopyWithImpl<LoginMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,email);
+int get hashCode => Object.hash(runtimeType,id,email,role);
 
 @override
 String toString() {
-  return 'LoginModel(id: $id, email: $email)';
+  return 'LoginModel(id: $id, email: $email, role: $role)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $LoginModelCopyWith<$Res>  {
   factory $LoginModelCopyWith(LoginModel value, $Res Function(LoginModel) _then) = _$LoginModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String email
+ String id, String email, String role
 });
 
 
@@ -65,10 +65,11 @@ class _$LoginModelCopyWithImpl<$Res>
 
 /// Create a copy of LoginModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? role = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String email,  String role)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _LoginModel() when $default != null:
-return $default(_that.id,_that.email);case _:
+return $default(_that.id,_that.email,_that.role);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.id,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String email,  String role)  $default,) {final _that = this;
 switch (_that) {
 case _LoginModel():
-return $default(_that.id,_that.email);case _:
+return $default(_that.id,_that.email,_that.role);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.id,_that.email);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String email,  String role)?  $default,) {final _that = this;
 switch (_that) {
 case _LoginModel() when $default != null:
-return $default(_that.id,_that.email);case _:
+return $default(_that.id,_that.email,_that.role);case _:
   return null;
 
 }
@@ -210,11 +211,12 @@ return $default(_that.id,_that.email);case _:
 @JsonSerializable()
 
 class _LoginModel implements LoginModel {
-  const _LoginModel({required this.id, required this.email});
+  const _LoginModel({required this.id, required this.email, required this.role});
   factory _LoginModel.fromJson(Map<String, dynamic> json) => _$LoginModelFromJson(json);
 
 @override final  String id;
 @override final  String email;
+@override final  String role;
 
 /// Create a copy of LoginModel
 /// with the given fields replaced by the non-null parameter values.
@@ -229,16 +231,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _LoginModel&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.role, role) || other.role == role));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,email);
+int get hashCode => Object.hash(runtimeType,id,email,role);
 
 @override
 String toString() {
-  return 'LoginModel(id: $id, email: $email)';
+  return 'LoginModel(id: $id, email: $email, role: $role)';
 }
 
 
@@ -249,7 +251,7 @@ abstract mixin class _$LoginModelCopyWith<$Res> implements $LoginModelCopyWith<$
   factory _$LoginModelCopyWith(_LoginModel value, $Res Function(_LoginModel) _then) = __$LoginModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String email
+ String id, String email, String role
 });
 
 
@@ -266,10 +268,11 @@ class __$LoginModelCopyWithImpl<$Res>
 
 /// Create a copy of LoginModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? role = null,}) {
   return _then(_LoginModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

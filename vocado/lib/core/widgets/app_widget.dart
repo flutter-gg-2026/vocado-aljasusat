@@ -18,6 +18,8 @@ class AppWidget extends StatelessWidget {
   final FontWeight? fontWeight;
   final double? fontSize;
   final Color? color;
+  final String? Function(String?)? validator;
+  final bool isLoading;
 
   const AppWidget._({
     required this.type,
@@ -31,14 +33,25 @@ class AppWidget extends StatelessWidget {
     this.fontWeight,
     this.fontSize,
     this.color,
+    this.validator,
+    this.isLoading = false,
   });
 
   factory AppWidget.card({required Widget child, String? title}) {
     return AppWidget._(type: AppWidgetType.card, title: title, child: child);
   }
 
-  factory AppWidget.button({required String title, void Function()? onTap}) {
-    return AppWidget._(type: AppWidgetType.button, title: title, onTap: onTap);
+  factory AppWidget.button({
+    required String title,
+    void Function()? onTap,
+    bool isLoading = false,
+  }) {
+    return AppWidget._(
+      type: AppWidgetType.button,
+      title: title,
+      onTap: onTap,
+      isLoading: isLoading,
+    );
   }
 
   factory AppWidget.input({
@@ -46,6 +59,7 @@ class AppWidget extends StatelessWidget {
     TextEditingController? controller,
     required IconData icon,
     bool obscureText = false,
+    String? Function(String?)? validator,
   }) {
     return AppWidget._(
       type: AppWidgetType.input,
@@ -53,6 +67,7 @@ class AppWidget extends StatelessWidget {
       controller: controller,
       icon: icon,
       obscureText: obscureText,
+      validator: validator,
     );
   }
 
@@ -89,7 +104,7 @@ class AppWidget extends StatelessWidget {
         );
 
       case AppWidgetType.button:
-        return AppButton(title: title!, onTap: onTap!);
+        return AppButton(title: title!, onTap: onTap!, isLoading: isLoading);
 
       case AppWidgetType.input:
         return AppInput(
