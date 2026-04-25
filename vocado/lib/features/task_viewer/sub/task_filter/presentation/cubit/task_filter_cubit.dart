@@ -5,23 +5,21 @@ import 'package:vocado/features/task_viewer/sub/task_filter/presentation/cubit/t
 class TaskFilterCubit extends Cubit<TaskFilterState> {
   final TaskFilterUseCase _taskFilterUseCase;
 
-  TaskFilterCubit(this._taskFilterUseCase) : super(TaskFilterInitialState());
+  TaskFilterCubit(this._taskFilterUseCase)
+      : super(TaskFilterInitialState());
 
   Future<void> getTaskFilterMethod() async {
     final result = await _taskFilterUseCase.getTaskFilter();
+
     result.when(
       (success) {
-        //here is when success result
+        emit(TaskFilterLoadedState(
+          tasks: success,
+        ));
       },
       (whenError) {
-       //here is when error result
+        emit(TaskFilterErrorState(message: "Something went wrong"));
       },
     );
-  }
-
-  @override
-  Future<void> close() {
-    //here is when close cubit
-    return super.close();
   }
 }
