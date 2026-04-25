@@ -22,3 +22,18 @@ extension TeamModelMapper on TeamModel {
     return TeamEntity(id: id, firstName: firstName, lastName: lastName);
   }
   }
+
+
+class TeamMemberModel {
+  final String name;
+  final String role;
+  final int tasks;
+  final String status;
+
+  TeamMemberModel({
+    required this.name,
+    required this.role,
+    required this.tasks,
+    required this.status,
+  });
+}
