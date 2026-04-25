@@ -1,7 +1,7 @@
 import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vocado/core/errors/failure.dart';
-import 'package:vocado/features/team/domain/entities/team_entity.dart';
+import 'package:vocado/features/team/domain/entities/team_data_entity.dart';
 import 'package:vocado/features/team/domain/repositories/team_repository_domain.dart';
 
 @lazySingleton
@@ -10,7 +10,11 @@ class TeamUseCase {
 
   TeamUseCase(this._repositoryData);
 
-  Future<Result<List<TeamEntity>, Failure>> getTeam() async {
+  Future<Result<TeamDataEntity, Failure>> getTeam() async {
     return _repositoryData.getTeam();
+  }
+
+  Future<Result<void, Failure>> deleteUser(String id) async {
+    return _repositoryData.deleteUser(id);
   }
 }

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:vocado/features/task_creator/domain/entities/task_creator_entity.dart';
 import 'package:vocado/features/team/domain/entities/team_entity.dart';
 
 abstract class TeamState extends Equatable {
@@ -15,12 +14,12 @@ class TeamLoadingState extends TeamState {}
 
 class TeamSuccessState extends TeamState {
   final List<TeamEntity> teamMembers;
-  final List<TaskCreatorEntity> tasks;
+  final int tasksCount;
 
-  const TeamSuccessState({required this.teamMembers, required this.tasks});
+  const TeamSuccessState({required this.teamMembers, required this.tasksCount});
 
   @override
-  List<Object?> get props => [teamMembers];
+  List<Object?> get props => [teamMembers, tasksCount];
 }
 
 class TeamErrorState extends TeamState {
@@ -31,3 +30,5 @@ class TeamErrorState extends TeamState {
   @override
   List<Object?> get props => [message];
 }
+
+class TeamDeleteLoadingState extends TeamState {}

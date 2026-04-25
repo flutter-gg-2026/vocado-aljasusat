@@ -5,6 +5,8 @@ import 'package:vocado/core/errors/network_exceptions.dart';
 
 abstract class BaseTeamRemoteDataSource {
   Future<List<TeamModel>> getTeam();
+  Future<int> getTasksCount();
+  Future<void> deleteUser(String id);
 }
 
 @LazySingleton(as: BaseTeamRemoteDataSource)
@@ -24,6 +26,26 @@ class TeamRemoteDataSource implements BaseTeamRemoteDataSource {
       return response.map<TeamModel>((json) {
         return TeamModel.fromJson(json);
       }).toList();
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<int> getTasksCount() async {
+    try {
+      final response = await _supabase.from('task').select('id');
+
+      return response.length;
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<void> deleteUser(String id) async {
+    try {
+      await _supabase.from('users').delete().eq('id', id);
     } catch (error) {
       throw FailureExceptions.getException(error);
     }

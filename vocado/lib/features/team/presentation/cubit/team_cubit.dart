@@ -17,7 +17,25 @@ class TeamCubit extends Cubit<TeamState> {
 
     result.when(
       (success) {
-        emit(TeamSuccessState(teamMembers: success, tasks: allTasks));
+        emit(
+          TeamSuccessState(
+            teamMembers: success.teamMembers,
+            tasksCount: success.tasksCount,
+          ),
+        );
+      },
+      (error) {
+        emit(TeamErrorState(message: error.message));
+      },
+    );
+  }
+
+  Future<void> deleteUserMethod(String id) async {
+    final result = await _teamUseCase.deleteUser(id);
+
+    result.when(
+      (success) {
+        getTeamMethod();
       },
       (error) {
         emit(TeamErrorState(message: error.message));

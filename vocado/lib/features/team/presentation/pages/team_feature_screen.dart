@@ -38,7 +38,6 @@ class TeamFeatureScreen extends StatelessWidget {
                 if (state is TeamSuccessState) {
                   final teamMembers = state.teamMembers;
 
-
                   if (teamMembers.isEmpty) {
                     return Center(
                       child: Text(
@@ -88,6 +87,10 @@ class TeamFeatureScreen extends StatelessWidget {
                               title: 'Members',
                               value: '${teamMembers.length}',
                             ),
+                            TeamStatItem(
+                              title: 'Tasks',
+                              value: '${state.tasksCount}',
+                            ),
                           ],
                         ),
                       ),
@@ -101,7 +104,41 @@ class TeamFeatureScreen extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final member = teamMembers[index];
 
-                            return TeamMemberCard(member: member, index: index);
+                            return TeamMemberCard(
+                              member: member,
+                              index: index,
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Delete User'),
+                                      content: Text(
+                                        'Are you sure you want to delete this user?',
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(dialogContext);
+                                          },
+                                          child: Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(dialogContext);
+
+                                            context
+                                                .read<TeamCubit>()
+                                                .deleteUserMethod(member.id);
+                                          },
+                                          child: Text('Delete'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                         ),
                       ),

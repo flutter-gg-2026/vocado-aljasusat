@@ -7,8 +7,14 @@ import 'package:vocado/features/team/domain/entities/team_entity.dart';
 class TeamMemberCard extends StatelessWidget {
   final TeamEntity member;
   final int index;
+  final void Function()? onPressed;
 
-  const TeamMemberCard({super.key, required this.member, required this.index});
+  const TeamMemberCard({
+    super.key,
+    required this.member,
+    required this.index,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,13 +88,12 @@ class TeamMemberCard extends StatelessWidget {
                   ),
                 ),
                 Gap(10),
-                
               ],
             ),
           ),
 
           FilledButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.error.withValues(alpha: 0.3),
               padding: EdgeInsets.symmetric(horizontal: 20),
