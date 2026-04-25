@@ -24,4 +24,35 @@ class TaskCreatorRepositoryData implements TaskCreatorRepositoryDomain {
       return Error(FailureExceptions.getException(error));
     }
   }
+
+  @override
+  Future<Result<void, Failure>> deleteTask(int id) async {
+    try {
+      await remoteDataSource.deleteTask(id);
+      return const Success(null);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
+  }
+
+  @override
+  Future<Result<void, Failure>> updateTask({
+    required int id,
+    required String name,
+    required String description,
+    required String dueDate,
+  }) async {
+    try {
+      await remoteDataSource.updateTask(
+        id: id,
+        name: name,
+        description: description,
+        dueDate: dueDate,
+      );
+
+      return const Success(null);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
+  }
 }

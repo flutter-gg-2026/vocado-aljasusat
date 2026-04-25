@@ -17,7 +17,6 @@ class TaskCreatorCubit extends Cubit<TaskCreatorState> {
 
     result.when(
       (success) {
-        print('TASKS COUNT: ${success.length}');
         allTasks = success;
         emit(TaskCreatorSuccessState(tasks: allTasks));
       },
@@ -29,5 +28,45 @@ class TaskCreatorCubit extends Cubit<TaskCreatorState> {
 
   void changeFilter(String filter) {
     emit(TaskCreatorSuccessState(tasks: allTasks, selectedFilter: filter));
+  }
+
+  Future<void> deleteTask(int id) async {
+    emit(TaskCreatorLoadingState());
+
+    final result = await _taskCreatorUseCase.deleteTask(id);
+
+    result.when(
+      (success) async {
+        await getTaskCreatorMethod();
+      },
+      (failure) {
+        emit(TaskCreatorErrorState(message: failure.message));
+      },
+    );
+  }
+
+  Future<void> updateTask({
+    required int id,
+    required String name,
+    required String description,
+    required String dueDate,
+  }) async {
+    emit(TaskCreatorLoadingState());
+
+    final result = await _taskCreatorUseCase.updateTask(
+      id: id,
+      name: name,
+      description: description,
+      dueDate: dueDate,
+    );
+
+    result.when(
+      (success) async {
+        await getTaskCreatorMethod();
+      },
+      (failure) {
+        emit(TaskCreatorErrorState(message: failure.message));
+      },
+    );
   }
 }

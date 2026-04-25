@@ -5,6 +5,13 @@ import 'package:vocado/core/errors/network_exceptions.dart';
 
 abstract class BaseTaskCreatorRemoteDataSource {
   Future<List<TaskCreatorModel>> getTaskCreator();
+  Future<void> deleteTask(int id);
+  Future<void> updateTask({
+    required int id,
+    required String name,
+    required String description,
+    required String dueDate,
+  });
 }
 
 @LazySingleton(as: BaseTaskCreatorRemoteDataSource)
@@ -43,6 +50,36 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
 
         return TaskCreatorModel.fromJson(data);
       }).toList();
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<void> deleteTask(int id) async {
+    try {
+      await _supabase.from('task').delete().eq('id', id);
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<void> updateTask({
+    required int id,
+    required String name,
+    required String description,
+    required String dueDate,
+  }) async {
+    try {
+      await _supabase
+          .from('task')
+          .update({
+            'name': name,
+            'description': description,
+            'due_date': dueDate,
+          })
+          .eq('id', id);
     } catch (error) {
       throw FailureExceptions.getException(error);
     }
