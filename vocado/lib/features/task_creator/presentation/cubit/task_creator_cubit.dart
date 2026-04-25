@@ -9,16 +9,27 @@ class TaskCreatorCubit extends Cubit<TaskCreatorState> {
   TaskCreatorCubit(this._taskCreatorUseCase) : super(TaskCreatorInitialState());
 
   List<TaskCreatorEntity> allTasks = [];
+  String userName = 'User';
+
 
   Future<void> getTaskCreatorMethod() async {
     emit(TaskCreatorLoadingState());
 
-    final result = await _taskCreatorUseCase.getTaskCreator();
+    final tasksResult = await _taskCreatorUseCase.getTaskCreator();
+    final name = await _taskCreatorUseCase.getCurrentUserName();
 
-    result.when(
+    tasksResult.when(
       (success) {
         allTasks = success;
-        emit(TaskCreatorSuccessState(tasks: allTasks));
+        userName = name;
+
+        emit(
+          TaskCreatorSuccessState(
+            tasks: allTasks,
+            selectedFilter: 'All',
+            userName: userName,
+          ),
+        );
       },
       (failure) {
         emit(TaskCreatorErrorState(message: failure.message));

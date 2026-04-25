@@ -55,4 +55,8 @@ class TaskCreatorRepositoryData implements TaskCreatorRepositoryDomain {
       return Error(FailureExceptions.getException(error));
     }
   }
+
+  Future<String> getCurrentUserName() async {
+  return remoteDataSource.getCurrentUserName();
+}
 }

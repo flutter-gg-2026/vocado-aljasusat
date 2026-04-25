@@ -12,6 +12,7 @@ abstract class BaseTaskCreatorRemoteDataSource {
     required String description,
     required String dueDate,
   });
+  Future<String> getCurrentUserName();
 }
 
 @LazySingleton(as: BaseTaskCreatorRemoteDataSource)
@@ -109,6 +110,25 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
             'due_date': dueDate,
           })
           .eq('id', id);
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<String> getCurrentUserName() async {
+    try {
+      final user = _supabase.auth.currentUser;
+
+      if (user == null) return 'User';
+
+      final response = await _supabase
+          .from('users')
+          .select('name')
+          .eq('user_id', user.id)
+          .single();
+
+      return response['name'] ?? 'User';
     } catch (error) {
       throw FailureExceptions.getException(error);
     }

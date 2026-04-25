@@ -37,6 +37,18 @@ class AdminHomeScreen extends StatelessWidget {
     return gradients[index % gradients.length];
   }
 
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+
+    if (hour < 12) {
+      return 'Good Morning';
+    } else if (hour < 17) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<TaskCreatorCubit>();
@@ -70,6 +82,10 @@ class AdminHomeScreen extends StatelessWidget {
                 ? state.selectedFilter
                 : 'All';
 
+            final String userName = state is TaskCreatorSuccessState
+                ? state.userName
+                : 'User';
+
             final List<TaskCreatorEntity> filteredTasks = currentFilter == 'All'
                 ? tasks
                 : tasks.where((task) {
@@ -86,7 +102,7 @@ class AdminHomeScreen extends StatelessWidget {
                       children: [
                         Gap(80),
                         Text(
-                          'Good Morning, Layan!',
+                          '${getGreeting()}, $userName!',
                           style: TextStyle(
                             color: AppColors.textMain,
                             fontWeight: FontWeight.bold,
@@ -102,7 +118,6 @@ class AdminHomeScreen extends StatelessWidget {
                           ),
                         ),
                         Gap(20),
-
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
@@ -127,7 +142,6 @@ class AdminHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 if (filteredTasks.isEmpty)
                   SliverFillRemaining(
                     hasScrollBody: false,
@@ -169,7 +183,6 @@ class AdminHomeScreen extends StatelessWidget {
                       }, childCount: filteredTasks.length),
                     ),
                   ),
-
                 SliverToBoxAdapter(child: Gap(120)),
               ],
             );

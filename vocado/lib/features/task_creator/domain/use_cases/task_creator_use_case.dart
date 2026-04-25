@@ -31,4 +31,8 @@ class TaskCreatorUseCase {
       dueDate: dueDate,
     );
   }
+
+  Future<String> getCurrentUserName() async {
+  return _repositoryData.getCurrentUserName();
+}
 }

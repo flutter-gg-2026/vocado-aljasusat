@@ -12,4 +12,5 @@ abstract class TaskCreatorRepositoryDomain {
     required String description,
     required String dueDate,
   });
+  Future<String> getCurrentUserName();
 }

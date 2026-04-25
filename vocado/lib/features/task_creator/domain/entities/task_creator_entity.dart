@@ -17,7 +17,8 @@ class TaskCreatorEntity extends Equatable {
     this.dueDate,
     this.status = 'Pending',
     this.assignedBy,
-    this.description, this.assigneeName,
+    this.description,
+    this.assigneeName,
   });
 
   @override
@@ -29,6 +30,6 @@ class TaskCreatorEntity extends Equatable {
     status,
     assignedBy,
     description,
-    assigneeName
+    assigneeName,
   ];
 }

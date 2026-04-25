@@ -15,14 +15,16 @@ class TaskCreatorLoadingState extends TaskCreatorState {}
 class TaskCreatorSuccessState extends TaskCreatorState {
   final List<TaskCreatorEntity> tasks;
   final String selectedFilter;
+  final String userName;
 
   const TaskCreatorSuccessState({
     required this.tasks,
     this.selectedFilter = 'All',
+    this.userName = 'User',
   });
 
   @override
-  List<Object?> get props => [tasks, selectedFilter];
+  List<Object?> get props => [tasks, selectedFilter, userName];
 }
 
 class TaskCreatorErrorState extends TaskCreatorState {
