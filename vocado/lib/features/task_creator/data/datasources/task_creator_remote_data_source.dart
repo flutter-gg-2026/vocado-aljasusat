@@ -46,7 +46,7 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
       return response.map<TaskCreatorModel>((json) {
         final data = Map<String, dynamic>.from(json);
 
-        data['assignee_name'] = data['users']?['name'];
+        data['assignee_name'] = data['assignee_name'] ?? data['assigned_by'];
 
         return TaskCreatorModel.fromJson(data);
       }).toList();

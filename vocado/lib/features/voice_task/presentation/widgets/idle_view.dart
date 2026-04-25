@@ -13,39 +13,40 @@ class IdleView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
-            const Gap(40),
+            Gap(40),
 
             AppWidget.text(
               text: "Create Voice Task",
-              fontSize: 22,
+              fontSize: 30,
               fontWeight: FontWeight.bold,
             ),
 
-            const Gap(12),
+            Gap(12),
 
             AppWidget.text(
               text:
                   "Tap the microphone and describe the task clearly. Include the assignee, task details, and deadline.",
-              fontSize: 14,
-              color: AppColors.textSecondary,
+              color: AppColors.textMain.withValues(alpha: 0.6),
+              fontSize: 16,
+              fontWeight: .normal,
             ),
 
-            const Spacer(),
+            Spacer(),
 
             Center(
               child: GestureDetector(
                 onTap: () {
                   context.read<VoiceTaskCubit>().startRecording();
                 },
-                child: const MicButton(),
+                child: MicButton(),
               ),
             ),
 
-            const Spacer(),
+            Spacer(),
           ],
         ),
       ),

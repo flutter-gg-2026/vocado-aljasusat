@@ -5,13 +5,12 @@ part 'task_creator_model.g.dart';
 
 @freezed
 abstract class TaskCreatorModel with _$TaskCreatorModel {
-  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TaskCreatorModel({
     required int id,
     required String userId,
     required String name,
     required String dueDate,
-    required String status,
+    @Default('Pending') String status,
     String? assigneeName,
     String? assignedBy,
     String? description,

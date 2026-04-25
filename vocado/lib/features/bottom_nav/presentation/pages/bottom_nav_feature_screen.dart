@@ -6,6 +6,7 @@ import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.d
 import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_state.dart';
 import 'package:vocado/features/bottom_nav/presentation/widgets/bottom_nav_widget.dart';
 import 'package:vocado/features/task_creator/presentation/pages/task_creator_feature_screen.dart';
+import 'package:vocado/features/team/presentation/pages/team_feature_screen.dart';
 import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
 
 class BottomNav extends StatelessWidget {
@@ -16,6 +17,7 @@ class BottomNav extends StatelessWidget {
   final List<Widget> screens = const [
     AdminHomeScreen(),
     VoiceTaskFeatureScreen(),
+    TeamFeatureScreen()
   ];
 
   @override
@@ -52,7 +54,6 @@ class BottomNav extends StatelessWidget {
                   stops: [0.0, 0.35,],
                 ),
                 borderRadius: BorderRadius.circular(35),
-                border: Border.all(color: AppColors.borderLight, width: 0.5),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -69,7 +70,12 @@ class BottomNav extends StatelessWidget {
                     currentIndex: currentIndex,
                     pageController: pageController,
                   ),
-                  
+                  NavItemWidget(
+                    icon: Icons.group,
+                    index: 2,
+                    currentIndex: currentIndex,
+                    pageController: pageController,
+                  ),
                 ],
               ),
             ),

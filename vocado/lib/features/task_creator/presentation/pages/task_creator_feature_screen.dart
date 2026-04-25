@@ -16,7 +16,32 @@ import 'package:vocado/features/task_creator/presentation/widgets/task_card_widg
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
 
-  List<Color> getTaskGradient(int index) {
+  String getTaskStatus(TaskCreatorEntity task) {
+    final dueDate = DateTime.tryParse(task.dueDate);
+    final today = DateTime.now();
+
+    if (dueDate == null) return task.status;
+
+    final isDeadlinePassed = dueDate.isBefore(
+      DateTime(today.year, today.month, today.day),
+    );
+
+    final isCompleted = task.status.toLowerCase() == 'Completed';
+
+    if (isDeadlinePassed && !isCompleted) {
+      return 'Late';
+    }
+
+    return task.status;
+  }
+
+  List<Color> getTaskGradient(TaskCreatorEntity task, int index) {
+    final status = getTaskStatus(task);
+
+    if (status == 'Late') {
+      return [AppColors.error, AppColors.background];
+    }
+
     final gradients = [
       AppColors.uiUxGradient,
       AppColors.dotNetGradient,
@@ -56,14 +81,15 @@ class AdminHomeScreen extends StatelessWidget {
             final List<TaskCreatorEntity> tasks =
                 state is TaskCreatorSuccessState ? state.tasks : [];
 
-            final String currentFilter =
-                state is TaskCreatorSuccessState ? state.selectedFilter : 'All';
+            final String currentFilter = state is TaskCreatorSuccessState
+                ? state.selectedFilter
+                : 'All';
 
             final List<TaskCreatorEntity> filteredTasks = currentFilter == 'All'
                 ? tasks
-                : tasks
-                    .where((task) => task.status == currentFilter)
-                    .toList();
+                : tasks.where((task) {
+                    return getTaskStatus(task) == currentFilter;
+                  }).toList();
 
             return CustomScrollView(
               slivers: [
@@ -94,19 +120,20 @@ class AdminHomeScreen extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: [
-                              'All',
-                              'completed',
-                              'pending',
-                              'in Progress',
-                              'late',
-                            ].map((filter) {
-                              return FilterChipWidget(
-                                label: filter,
-                                isSelected: currentFilter == filter,
-                                onTap: () => cubit.changeFilter(filter),
-                              );
-                            }).toList(),
+                            children:
+                                [
+                                  'All',
+                                  'Completed',
+                                  'Pending',
+                                  'In Progress',
+                                  'Late',
+                                ].map((filter) {
+                                  return FilterChipWidget(
+                                    label: filter,
+                                    isSelected: currentFilter == filter,
+                                    onTap: () => cubit.changeFilter(filter),
+                                  );
+                                }).toList(),
                           ),
                         ),
                         Gap(10),
@@ -133,37 +160,31 @@ class AdminHomeScreen extends StatelessWidget {
                   SliverPadding(
                     padding: EdgeInsets.symmetric(horizontal: 16),
                     sliver: SliverGrid(
-                      gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
                         childAspectRatio: 0.85,
                       ),
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final task = filteredTasks[index];
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final task = filteredTasks[index];
 
-                          return TaskCardWidget(
-                            title: task.name,
-                            assignee: task.assigneeName ?? task.userId,
-                            gradient: getTaskGradient(index),
-                            onTap: () {
-                              context.showBottomSheet(
-                                height: 55.h,
-                                widget: BottomSheetWidget(task: task),
-                              );
-                            },
-                          );
-                        },
-                        childCount: filteredTasks.length,
-                      ),
+                        return TaskCardWidget(
+                          title: task.name,
+                          assignee: task.assigneeName ?? task.userId,
+                          gradient: getTaskGradient(task, index),
+                          onTap: () {
+                            context.showBottomSheet(
+                              height: 55.h,
+                              widget: BottomSheetWidget(task: task),
+                            );
+                          },
+                        );
+                      }, childCount: filteredTasks.length),
                     ),
                   ),
 
-                SliverToBoxAdapter(
-                  child: Gap(120),
-                ),
+                SliverToBoxAdapter(child: Gap(120)),
               ],
             );
           },

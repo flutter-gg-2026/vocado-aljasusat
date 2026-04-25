@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vocado/core/theme/app_colors.dart';
+import 'package:vocado/core/widgets/bg_container.dart';
 import 'package:vocado/core/widgets/loading_widget.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/error_view.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/idle_view.dart';
@@ -15,14 +15,7 @@ class VoiceTaskFeatureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: AppColors.backgroundGradient,
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        ),
+      body: BgContainer(
         child: BlocBuilder<VoiceTaskCubit, VoiceTaskState>(
           builder: (context, state) {
             if (state is VoiceTaskLoadingState) {

@@ -18,12 +18,12 @@ class BottomSheetWidget extends StatelessWidget {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Delete Task'),
-          content: const Text('Are you sure you want to delete this task?'),
+          title: Text('Delete Task'),
+          content: Text('Are you sure you want to delete this task?'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
+              child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () async {
@@ -52,26 +52,26 @@ class BottomSheetWidget extends StatelessWidget {
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
-          title: const Text('Edit Task'),
+          title: Text('Edit Task'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(labelText: 'Task Name'),
+                  decoration: InputDecoration(labelText: 'Task Name'),
                 ),
-                const Gap(12),
+                Gap(12),
                 TextField(
                   controller: descriptionController,
                   maxLines: 3,
-                  decoration: const InputDecoration(labelText: 'Description'),
+                  decoration: InputDecoration(labelText: 'Description'),
                 ),
-                const Gap(12),
+                Gap(12),
                 TextField(
                   controller: dueDateController,
                   readOnly: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Due Date',
                     suffixIcon: Icon(Icons.calendar_today_outlined),
                   ),
@@ -98,7 +98,7 @@ class BottomSheetWidget extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
+              child: Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -139,7 +139,7 @@ class BottomSheetWidget extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const Gap(10),
+            Gap(10),
             Text(
               task.name,
               style: TextStyle(
@@ -148,31 +148,31 @@ class BottomSheetWidget extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Gap(15),
+            Gap(15),
             DetailRow(
               icon: Icons.description_outlined,
               label: 'Description',
               value: task.description ?? 'No Description',
             ),
-            const Gap(20),
+            Gap(20),
             DetailRow(
               icon: Icons.person_outline,
               label: 'Assignee',
               value: task.assigneeName ?? task.userId,
             ),
-            const Gap(20),
+            Gap(20),
             DetailRow(
               icon: Icons.calendar_today_outlined,
               label: 'Due Date',
               value: task.dueDate,
             ),
-            const Gap(20),
+            Gap(20),
             DetailRow(
               icon: Icons.label_outline,
               label: 'Status',
               value: task.status,
             ),
-            const Gap(20),
+            Gap(20),
             Row(
               children: [
                 Expanded(
@@ -191,7 +191,7 @@ class BottomSheetWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Gap(8),
+                Gap(8),
                 Expanded(
                   child: ElevatedButton(
                     onPressed: () => _showEditDialog(context),
@@ -210,7 +210,7 @@ class BottomSheetWidget extends StatelessWidget {
                 ),
               ],
             ),
-            const Gap(50),
+            Gap(50),
           ],
         ),
       ),

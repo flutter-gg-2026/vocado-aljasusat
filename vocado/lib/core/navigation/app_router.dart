@@ -14,6 +14,8 @@ import 'package:vocado/features/bottom_nav/presentation/pages/bottom_nav_feature
 import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
 import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';
+import 'package:vocado/features/team/presentation/pages/team_feature_screen.dart';
+import 'package:vocado/features/team/presentation/cubit/team_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -45,8 +47,12 @@ class AppRouter {
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => BottomNavCubit(GetIt.I.get())),
-              BlocProvider(create: (_) => TaskCreatorCubit(GetIt.I.get())..getTaskCreatorMethod()),
+              BlocProvider(
+                create: (_) =>
+                    TaskCreatorCubit(GetIt.I.get())..getTaskCreatorMethod(),
+              ),
               BlocProvider(create: (_) => VoiceTaskCubit(GetIt.I.get())),
+              BlocProvider(create: (_) => TeamCubit(GetIt.I.get())),
             ],
             child: child,
           );
@@ -68,6 +74,11 @@ class AppRouter {
               create: (context) => VoiceTaskCubit(GetIt.I.get()),
               child: const VoiceTaskFeatureScreen(),
             ),
+          ),
+
+          GoRoute(
+            path: Routes.team,
+            builder: (context, state) => const TeamFeatureScreen(),
           ),
         ],
       ),
