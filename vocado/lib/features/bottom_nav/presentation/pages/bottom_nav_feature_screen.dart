@@ -6,6 +6,7 @@ import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.d
 import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_state.dart';
 import 'package:vocado/features/bottom_nav/presentation/widgets/bottom_nav_widget.dart';
 import 'package:vocado/features/task_creator/presentation/pages/task_creator_feature_screen.dart';
+import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
 
 class BottomNav extends StatelessWidget {
   BottomNav({super.key});
@@ -14,7 +15,7 @@ class BottomNav extends StatelessWidget {
 
   final List<Widget> screens = const [
     AdminHomeScreen(),
-    Center(child: Text('VoiceRecordScreen()'),),
+    VoiceTaskFeatureScreen(),
   ];
 
   @override
@@ -29,7 +30,6 @@ class BottomNav extends StatelessWidget {
           backgroundColor: AppColors.background,
           extendBody: true,
 
-
           body: PageView(
             controller: pageController,
             onPageChanged: (index) {
@@ -39,7 +39,7 @@ class BottomNav extends StatelessWidget {
           ),
 
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.only(bottom: 30, left:90, right:90),
+            padding: const EdgeInsets.only(bottom: 30, left: 90, right: 90),
             child: Container(
               height: 70,
               width: 50.sw,
@@ -48,7 +48,7 @@ class BottomNav extends StatelessWidget {
                   colors: AppColors.homeNavButtonGradient,
                   begin: .bottomLeft,
                   end: .topRight,
-                  stops: [0.0, 0.35,],
+                  stops: [0.0, 0.35],
                 ),
                 borderRadius: BorderRadius.circular(35),
                 border: Border.all(color: AppColors.borderLight, width: 0.5),
@@ -68,7 +68,6 @@ class BottomNav extends StatelessWidget {
                     currentIndex: currentIndex,
                     pageController: pageController,
                   ),
-                  
                 ],
               ),
             ),

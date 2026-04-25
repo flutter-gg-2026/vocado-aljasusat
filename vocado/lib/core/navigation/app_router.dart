@@ -12,6 +12,9 @@ import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit
 import 'package:vocado/features/splash/presentation/pages/splash_feature_screen.dart';
 import 'package:vocado/features/bottom_nav/presentation/pages/bottom_nav_feature_screen.dart';
 import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.dart';
+import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
+import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';
+
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -65,7 +68,15 @@ class AppRouter {
           ),
         ],
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.voiceTask,
+    builder: (context, state) => BlocProvider(
+          create: (context) => VoiceTaskCubit(GetIt.I.get()),
+          child: const VoiceTaskFeatureScreen(),
+        ),
+  ),
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),
