@@ -23,35 +23,60 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
   @override
   Future<List<TaskCreatorModel>> getTaskCreator() async {
     try {
-      final currentUser = _supabase.auth.currentUser;
-
-      if (currentUser == null) {
-        throw Exception('Authentication required');
-      }
-
       final response = await _supabase
           .from('task')
           .select('''
-      id,
-      name,
-      status,
-      due_date,
-      user_id,
-      assigned_by,
-      description,
-      users(name)
-    ''')
+            id,
+            name,
+            status,
+            due_date,
+            user_id,
+            assigned_by,
+            description,
+            users(name)
+          ''')
           .order('id', ascending: false);
+
+      final today = DateTime.now();
+
+      for (final task in response) {
+        final dueDateString = task['due_date'];
+
+        if (dueDateString == null || dueDateString.toString().isEmpty) {
+          continue;
+        }
+
+        final dueDate = DateTime.tryParse(dueDateString);
+
+        if (dueDate == null) continue;
+
+        final isLate = dueDate.isBefore(
+          DateTime(today.year, today.month, today.day),
+        );
+
+        final isCompleted =
+            (task['status'] ?? '').toString().toLowerCase() == 'completed';
+
+        if (isLate && !isCompleted && task['status'] != 'Late') {
+          await _supabase
+              .from('task')
+              .update({'status': 'Late'})
+              .eq('id', task['id']);
+
+          task['status'] = 'Late';
+        }
+      }
 
       return response.map<TaskCreatorModel>((json) {
         final data = Map<String, dynamic>.from(json);
 
-        data['assignee_name'] = data['assignee_name'] ?? data['assigned_by'];
+        data['assignee_name'] = data['users']?['name'] ?? data['assigned_by'];
+
         data['status'] ??= 'Pending';
         data['due_date'] ??= '';
         data['user_id'] ??= '';
         data['name'] ??= '';
-        
+
         return TaskCreatorModel.fromJson(data);
       }).toList();
     } catch (error) {
