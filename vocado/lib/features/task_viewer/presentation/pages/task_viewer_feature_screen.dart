@@ -27,7 +27,7 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: AppColors.backgroundGradient,
             begin: Alignment.bottomLeft,
@@ -38,7 +38,7 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
           child: BlocBuilder<TaskViewerCubit, TaskViewerState>(
             builder: (context, state) {
               if (state is TaskViewerLoadingState) {
-                return const Center(child: CircularProgressIndicator());
+                return Center(child: CircularProgressIndicator());
               }
 
               if (state is TaskViewerSuccessState) {
@@ -48,7 +48,7 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
                   slivers: [
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.all(20),
+                        padding: EdgeInsets.all(20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -56,7 +56,7 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
                               text: "Hello, ${state.user.name}",
                               fontSize: 20,
                             ),
-                            const Gap(16),
+                            Gap(16),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -82,15 +82,15 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
                       child: state.isExpanded
                           ? ListView.builder(
                               shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              padding: const EdgeInsets.symmetric(
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(
                                 horizontal: 20,
                               ),
                               itemCount: tasks.length,
                               itemBuilder: (_, index) {
                                 final task = tasks[index];
                                 return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12),
+                                  padding: EdgeInsets.only(bottom: 12),
                                   child: TopTaskCard(
                                     id: task.id,
                                     title: task.title,
@@ -103,13 +103,13 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
                           : SizedBox(
                               height: 160,
                               child: ListView.separated(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                   horizontal: 20,
                                 ),
                                 scrollDirection: Axis.horizontal,
                                 itemCount: tasks.length,
                                 separatorBuilder: (_, __) =>
-                                    const SizedBox(width: 12),
+                                    SizedBox(width: 12),
                                 itemBuilder: (_, index) {
                                   final task = tasks[index];
                                   return TopTaskCard(
@@ -123,16 +123,16 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
                             ),
                     ),
 
-                    const SliverToBoxAdapter(child: SizedBox(height: 20)),
+                    SliverToBoxAdapter(child: SizedBox(height: 20)),
 
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 20),
                         child: AppWidget.text(text: "All Tasks", fontSize: 20),
                       ),
                     ),
 
-                    const SliverToBoxAdapter(child: SizedBox(height: 10)),
+                    SliverToBoxAdapter(child: SizedBox(height: 10)),
 
                     SliverToBoxAdapter(
                       child: SizedBox(
@@ -144,7 +144,7 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
                 );
               }
 
-              return const SizedBox();
+              return SizedBox();
             },
           ),
         ),

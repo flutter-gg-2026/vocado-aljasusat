@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 import 'package:vocado/features/task_viewer/domain/use_cases/task_viewer_use_case.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_state.dart';
 import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
 
+@injectable
 class TaskViewerCubit extends Cubit<TaskViewerState> {
   final TaskViewerUseCase _useCase;
 

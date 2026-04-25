@@ -19,6 +19,8 @@ import 'package:vocado/features/task_viewer/domain/repositories/task_viewer_repo
     as _i476;
 import 'package:vocado/features/task_viewer/domain/use_cases/task_viewer_use_case.dart'
     as _i253;
+import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart'
+    as _i1070;
 import 'package:vocado/features/task_viewer/sub/task_filter/data/datasources/task_filter_remote_data_source.dart'
     as _i314;
 import 'package:vocado/features/task_viewer/sub/task_filter/data/repositories/task_filter_repository_data.dart'
@@ -48,6 +50,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i253.TaskViewerUseCase>(
       () => _i253.TaskViewerUseCase(gh<_i476.TaskViewerRepositoryDomain>()),
+    );
+    gh.factory<_i1070.TaskViewerCubit>(
+      () => _i1070.TaskViewerCubit(gh<_i253.TaskViewerUseCase>()),
     );
     gh.lazySingleton<_i125.TaskFilterRepositoryDomain>(
       () => _i724.TaskFilterRepositoryData(
