@@ -52,7 +52,9 @@ class AppRouter {
                     TaskCreatorCubit(GetIt.I.get())..getTaskCreatorMethod(),
               ),
               BlocProvider(create: (_) => VoiceTaskCubit(GetIt.I.get())),
-              BlocProvider(create: (_) => TeamCubit(GetIt.I.get())),
+              BlocProvider(
+                create: (_) => TeamCubit(GetIt.I.get())..getTeamMethod(),
+              ),
             ],
             child: child,
           );

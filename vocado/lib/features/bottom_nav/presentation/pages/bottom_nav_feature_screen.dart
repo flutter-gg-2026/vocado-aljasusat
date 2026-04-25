@@ -29,9 +29,8 @@ class BottomNav extends StatelessWidget {
           currentIndex = state.index;
         }
         return Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: Colors.transparent,
           extendBody: true,
-
 
           body: PageView(
             controller: pageController,

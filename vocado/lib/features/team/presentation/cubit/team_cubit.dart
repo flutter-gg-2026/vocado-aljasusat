@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vocado/features/task_creator/domain/entities/task_creator_entity.dart';
 import 'package:vocado/features/team/domain/use_cases/team_use_case.dart';
 import 'package:vocado/features/team/presentation/cubit/team_state.dart';
 
@@ -7,21 +8,20 @@ class TeamCubit extends Cubit<TeamState> {
 
   TeamCubit(this._teamUseCase) : super(TeamInitialState());
 
+  List<TaskCreatorEntity> allTasks = [];
+
   Future<void> getTeamMethod() async {
+    emit(TeamLoadingState());
+
     final result = await _teamUseCase.getTeam();
+
     result.when(
       (success) {
-        //here is when success result
+        emit(TeamSuccessState(teamMembers: success, tasks: allTasks));
       },
-      (whenError) {
-       //here is when error result
+      (error) {
+        emit(TeamErrorState(message: error.message));
       },
     );
-  }
-
-  @override
-  Future<void> close() {
-    //here is when close cubit
-    return super.close();
   }
 }

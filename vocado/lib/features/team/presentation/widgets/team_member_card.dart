@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
-import 'package:vocado/core/widgets/app_widget.dart';
-import 'package:vocado/features/team/data/models/team_model.dart';
+import 'package:vocado/features/team/domain/entities/team_entity.dart';
 
 class TeamMemberCard extends StatelessWidget {
-  final TeamMemberModel member;
+  final TeamEntity member;
   final int index;
 
   const TeamMemberCard({super.key, required this.member, required this.index});
@@ -83,23 +82,7 @@ class TeamMemberCard extends StatelessWidget {
                   ),
                 ),
                 Gap(10),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.task_alt,
-                      color: AppColors.accentAccent,
-                      size: 16,
-                    ),
-                    Gap(5),
-                    Text(
-                      '${member.tasks} tasks',
-                      style: TextStyle(
-                        color: AppColors.textMain.withValues(alpha: 0.7),
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
+                
               ],
             ),
           ),

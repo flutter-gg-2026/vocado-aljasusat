@@ -1,16 +1,18 @@
 import 'package:equatable/equatable.dart';
 
 class TeamEntity extends Equatable {
-  final int id;
-  final String firstName;
-  final String lastName;
+  final String id;
+  final String name;
+  final String email;
+  final String role;
 
   const TeamEntity({
     required this.id,
-    required this.firstName,
-    required this.lastName,
+    required this.name,
+    required this.email,
+    required this.role,
   });
 
   @override
-  List<Object?> get props => [firstName, lastName, id];
+  List<Object?> get props => [id, name, email, role];
 }

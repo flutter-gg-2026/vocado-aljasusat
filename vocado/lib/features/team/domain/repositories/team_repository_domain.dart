@@ -3,5 +3,5 @@ import 'package:vocado/core/errors/failure.dart';
 import 'package:vocado/features/team/domain/entities/team_entity.dart';
 
 abstract class TeamRepositoryDomain {
-    Future<Result<TeamEntity, Failure>> getTeam();
+  Future<Result<List<TeamEntity>, Failure>> getTeam();
 }

@@ -1,39 +1,23 @@
-import 'package:vocado/features/team/domain/entities/team_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vocado/features/team/domain/entities/team_entity.dart';
 part 'team_model.freezed.dart';
 part 'team_model.g.dart';
 
 @freezed
 abstract class TeamModel with _$TeamModel {
   const factory TeamModel({
-    required int id,
-    required String firstName,
-    required String lastName,
-    
+    required String id,
+    required String name,
+    required String email,
+    required String role,
   }) = _TeamModel;
 
-  factory TeamModel.fromJson(Map<String, Object?> json) => _$TeamModelFromJson(json);
+  factory TeamModel.fromJson(Map<String, Object?> json) =>
+      _$TeamModelFromJson(json);
 }
-
-
 
 extension TeamModelMapper on TeamModel {
   TeamEntity toEntity() {
-    return TeamEntity(id: id, firstName: firstName, lastName: lastName);
+    return TeamEntity(id: id, role: role, name: name, email: email);
   }
-  }
-
-
-class TeamMemberModel {
-  final String name;
-  final String role;
-  final int tasks;
-  final String status;
-
-  TeamMemberModel({
-    required this.name,
-    required this.role,
-    required this.tasks,
-    required this.status,
-  });
 }
