@@ -11,7 +11,7 @@ class TaskCreatorUseCase {
 
   TaskCreatorUseCase(this._repositoryData);
 
-   Future<Result<TaskCreatorEntity, Failure>> getTaskCreator() async {
+   Future<Result<List<TaskCreatorEntity>, Failure>> getTaskCreator() async {
     return _repositoryData.getTaskCreator();
   }
 }

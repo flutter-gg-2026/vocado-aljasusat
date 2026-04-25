@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vocado/features/task_creator/domain/entities/task_creator_entity.dart';
 import 'package:vocado/features/task_creator/domain/use_cases/task_creator_use_case.dart';
 import 'package:vocado/features/task_creator/presentation/cubit/task_creator_state.dart';
 
@@ -7,25 +8,25 @@ class TaskCreatorCubit extends Cubit<TaskCreatorState> {
 
   TaskCreatorCubit(this._taskCreatorUseCase) : super(TaskCreatorInitialState());
 
+  List<TaskCreatorEntity> allTasks = [];
+
   Future<void> getTaskCreatorMethod() async {
+    emit(TaskCreatorLoadingState());
+
     final result = await _taskCreatorUseCase.getTaskCreator();
+
     result.when(
       (success) {
-        //here is when success result
+        allTasks = success;
+        emit(TaskCreatorSuccessState(tasks: allTasks));
       },
-      (whenError) {
-        //here is when error result
+      (failure) {
+        emit(TaskCreatorErrorState(message: failure.message));
       },
     );
   }
 
   void changeFilter(String filter) {
-    emit(TaskCreatorSuccessState(selectedFilter: filter));
-  }
-
-  @override
-  Future<void> close() {
-    //here is when close cubit
-    return super.close();
+    emit(TaskCreatorSuccessState(tasks: allTasks, selectedFilter: filter));
   }
 }

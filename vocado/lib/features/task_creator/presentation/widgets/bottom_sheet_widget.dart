@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/theme/app_colors.dart';
+import 'package:vocado/features/task_creator/domain/entities/task_creator_entity.dart';
 
 class BottomSheetWidget extends StatelessWidget {
-  const BottomSheetWidget({super.key});
+  final TaskCreatorEntity task;
+
+  const BottomSheetWidget({super.key, required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class BottomSheetWidget extends StatelessWidget {
           ),
           Gap(10),
           Text(
-            'Update Figma Design System',
+            task.name,
             style: TextStyle(
               color: AppColors.calendarSelection,
               fontSize: 22.sp,
@@ -31,23 +34,22 @@ class BottomSheetWidget extends StatelessWidget {
             ),
           ),
           Gap(30),
-
           DetailRow(
             icon: Icons.person_outline,
             label: 'Assignee',
-            value: 'Rasha',
+            value: task.userId
           ),
           Gap(20),
           DetailRow(
             icon: Icons.calendar_today_outlined,
             label: 'Due Date',
-            value: '2026-04-23',
+            value: task.dueDate,
           ),
           Gap(20),
           DetailRow(
             icon: Icons.label_outline,
             label: 'Status',
-            value: 'In Progress',
+            value: task.status,
           ),
         ],
       ),
@@ -59,6 +61,7 @@ class DetailRow extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
+
   const DetailRow({
     super.key,
     required this.icon,
@@ -72,22 +75,25 @@ class DetailRow extends StatelessWidget {
       children: [
         Icon(icon, color: AppColors.calendarSelection, size: 24),
         Gap(15),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              label,
-              style: TextStyle(color: AppColors.textButton, fontSize: 12),
-            ),
-            Text(
-              value,
-              style: TextStyle(
-                color: AppColors.textButton,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: TextStyle(color: AppColors.textButton, fontSize: 12),
               ),
-            ),
-          ],
+              Text(
+                value,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: AppColors.textButton,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -9,13 +9,23 @@ part of 'task_creator_model.dart';
 _TaskCreatorModel _$TaskCreatorModelFromJson(Map<String, dynamic> json) =>
     _TaskCreatorModel(
       id: (json['id'] as num).toInt(),
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
+      userId: json['user_id'] as String,
+      name: json['name'] as String,
+      dueDate: json['due_date'] as String,
+      status: json['status'] as String,
+      assigneeName: json['assignee_name'] as String?,
+      assignedBy: json['assigned_by'] as String?,
+      description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$TaskCreatorModelToJson(_TaskCreatorModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
+      'user_id': instance.userId,
+      'name': instance.name,
+      'due_date': instance.dueDate,
+      'status': instance.status,
+      'assignee_name': instance.assigneeName,
+      'assigned_by': instance.assignedBy,
+      'description': instance.description,
     };
