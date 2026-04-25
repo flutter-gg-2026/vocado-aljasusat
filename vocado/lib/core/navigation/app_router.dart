@@ -9,11 +9,14 @@ import 'package:vocado/features/task_creator/presentation/pages/task_creator_fea
 import 'package:vocado/features/task_creator/presentation/cubit/task_creator_cubit.dart';
 import 'package:vocado/features/task_viewer/presentation/pages/task_viewer_feature_screen.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
+import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
+import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';
+
 
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.taskViewer,
+    initialLocation: Routes.voiceTask,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -47,6 +50,14 @@ class AppRouter {
       ),
     
   
+
+  GoRoute(
+    path: Routes.voiceTask,
+    builder: (context, state) => BlocProvider(
+          create: (context) => VoiceTaskCubit(GetIt.I.get()),
+          child: const VoiceTaskFeatureScreen(),
+        ),
+  ),
 ],
 
     errorBuilder: (context, state) =>

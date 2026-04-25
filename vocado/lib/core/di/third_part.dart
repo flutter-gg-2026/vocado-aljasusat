@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -18,5 +19,7 @@ abstract class ThirdPartyConfig {
   FlutterSecureStorage get flutterSecureStorage =>
       FlutterSecureStorage(aOptions: _getAndroidOptions());
   //----------------------------------------------------------------------------
+   @lazySingleton
+  Dio get dio => Dio();
 }
 
