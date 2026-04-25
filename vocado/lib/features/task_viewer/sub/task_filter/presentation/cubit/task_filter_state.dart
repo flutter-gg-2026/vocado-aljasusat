@@ -7,6 +7,7 @@ abstract class TaskFilterState extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
 class TaskFilterLoadedState extends TaskFilterState {
   final List<TaskFilterEntity> tasks;
 
@@ -16,6 +17,7 @@ class TaskFilterLoadedState extends TaskFilterState {
 }
 
 class TaskFilterInitialState extends TaskFilterState {}
+
 class TaskFilterSuccessState extends TaskFilterState {}
 
 class TaskFilterErrorState extends TaskFilterState {

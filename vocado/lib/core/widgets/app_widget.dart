@@ -37,13 +37,13 @@ class AppWidget extends StatelessWidget {
     this.controller,
     this.icon,
     this.obscureText = false,
-    this.maxLines,
-    this.overflow,
     this.fontSize,
     this.fontWeight,
     this.color,
     this.validator,
     this.isLoading = false,
+    this.maxLines,
+    this.overflow,
   });
 
   factory AppWidget.card({
@@ -151,8 +151,10 @@ class AppWidget extends StatelessWidget {
           text: title!,
           maxLines: maxLines,
           overflow: overflow,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
+
+          fontSize: fontSize ?? 15,
+          fontWeight: fontWeight ?? FontWeight.bold,
+
           color: color ?? AppColors.textMain,
         );
     }

@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 
 class AppText extends StatelessWidget {
-  const AppText({
-    super.key,
-    required this.text,
-    this.maxLines,
-    this.overflow,
-    this.fontSize = 15,
-    this.fontWeight = FontWeight.bold,
-    this.color = AppColors.textMain,
-  });
 
   final String text;
-  final int? maxLines;
-  final TextOverflow? overflow;
   final double? fontSize;
   final FontWeight? fontWeight;
   final Color? color;
+  final int? maxLines;
+  final TextOverflow? overflow;
+
+  const AppText({
+    super.key,
+    required this.text,
+    this.fontSize,
+    this.fontWeight,
+    this.color,
+    this.maxLines,
+    this.overflow,
+  });
 
   @override
   Widget build(BuildContext context) {

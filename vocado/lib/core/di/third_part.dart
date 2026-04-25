@@ -6,20 +6,26 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 @module
 abstract class ThirdPartyConfig {
-  //----------------------------------------------------------------------------
   @lazySingleton
   GetStorage get storage => GetStorage();
-  //----------------------------------------------------------------------------
+
   @lazySingleton
   SupabaseClient get supabaseClient => Supabase.instance.client;
-  //----------------------------------------------------------------------------
+
+  @lazySingleton
+  Dio get dio => Dio(
+        BaseOptions(
+          connectTimeout: const Duration(seconds: 30),
+          receiveTimeout: const Duration(seconds: 30),
+          sendTimeout: const Duration(seconds: 30),
+        ),
+      );
+
   AndroidOptions _getAndroidOptions() =>
       const AndroidOptions(encryptedSharedPreferences: true);
+
   @lazySingleton
   FlutterSecureStorage get flutterSecureStorage =>
       FlutterSecureStorage(aOptions: _getAndroidOptions());
-  //----------------------------------------------------------------------------
-   @lazySingleton
-  Dio get dio => Dio();
-}
 
+}

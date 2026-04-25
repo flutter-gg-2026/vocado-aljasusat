@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/extensions/context_extensions.dart';
+import 'package:vocado/core/navigation/routers.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/core/widgets/bg_container.dart';
 import 'package:vocado/core/widgets/loading_widget.dart';
@@ -48,7 +50,8 @@ class AdminHomeScreen extends StatelessWidget {
           assignee: 'User 4',
           gradient: AppColors.digitalArtGradient,
           onTap: () {
-            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
+            // context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
+            context.push(Routes.voiceTask);
           },
         ),
       ];
@@ -136,6 +139,7 @@ class AdminHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
               ],
             );
           },

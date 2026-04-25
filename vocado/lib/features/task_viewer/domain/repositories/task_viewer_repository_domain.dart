@@ -5,4 +5,6 @@ import 'package:vocado/features/task_viewer/domain/entities/user_entity.dart';
 
 abstract class TaskViewerRepositoryDomain {
   Future<Result<(UserEntity, List<TaskEntity>), Failure>> getTaskViewer();
+
 }
+

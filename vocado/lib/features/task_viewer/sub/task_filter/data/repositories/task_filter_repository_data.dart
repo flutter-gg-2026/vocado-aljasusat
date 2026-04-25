@@ -10,6 +10,7 @@ import 'package:vocado/features/task_viewer/sub/task_filter/data/models/task_fil
 import 'package:vocado/features/task_viewer/sub/task_filter/domain/repositories/task_filter_repository_domain.dart';
 
 @LazySingleton(as: TaskFilterRepositoryDomain)
+
 class TaskFilterRepositoryData implements TaskFilterRepositoryDomain{
   final BaseTaskFilterRemoteDataSource remoteDataSource;
 
@@ -28,3 +29,4 @@ Future<Result<List<TaskFilterEntity>, Failure>> getTaskFilter() async {
     return Error(FailureExceptions.getException(error));
   }
 }}
+

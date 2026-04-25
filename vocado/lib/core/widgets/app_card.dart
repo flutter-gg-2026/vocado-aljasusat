@@ -59,6 +59,7 @@ class AppCard extends StatelessWidget {
         border: Border.all(color: AppColors.borderLight),
       ),
       child: child,
+
     );
   }
 }
