@@ -56,35 +56,42 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
   }
 
   @override
-  Future<void> insertTask(VoiceTaskModel task) async {
-    final user = _supabase.auth.currentUser;
-
-    if (user == null) {
-      throw Exception("User not logged in");
-    }
-
-    final response = await _supabase
-        .from('users')
-        .select('name')
-        .eq('user_id', user.id)
-        .maybeSingle();
-
-    final userName = response?['name'] ?? user.email ?? 'User';
-
-    final assigneeName = (task.assignedTo.isNotEmpty)
-        ? task.assignedTo
-        : 'Unassigned';
-
-    await _supabase.from('task').insert({
-      'user_id': user.id,
-      'name': task.title,
-      'description': task.description,
-      'assignee': assigneeName,
-      'assigned_by': userName,
-      'due_date': task.deadline.toIso8601String().split('T').first,
-      'status': mapStatus(task.status),
-    });
+Future<void> insertTask(VoiceTaskModel task) async {
+  final authUser = _supabase.auth.currentUser;
+  if (authUser == null) {
+    throw Exception("User not logged in");
   }
+
+  final sender = await _supabase
+      .from('users')
+      .select('id, name')
+      .eq('user_id', authUser.id)
+      .maybeSingle();
+
+  final senderId = sender?['id'];
+  final senderName = sender?['name'] ?? authUser.email ?? 'User';
+
+  final receiver = await _supabase
+      .from('users')
+      .select('user_id, name')
+      .ilike('name', task.assignedTo)
+      .maybeSingle();
+
+  final assigneeAuthId = receiver?['user_id'];
+  final assigneeName = receiver?['name'] ?? 'Unassigned';
+
+  await _supabase.from('task').insert({
+    'user_id': senderId,
+    'assigned_by_id': senderId,
+    'assignee_id': assigneeAuthId,
+    'assigned_by': senderName,
+    'assignee': assigneeName,
+    'name': task.title,
+    'description': task.description,
+    'due_date': task.deadline.toIso8601String().split('T').first,
+    'status': mapStatus(task.status),
+  });
+}
 
   @override
   Future<void> startRecord() async {
