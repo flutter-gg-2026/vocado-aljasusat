@@ -5,6 +5,8 @@ class AppText extends StatelessWidget {
   final double? fontSize;
   final FontWeight? fontWeight;
   final Color? color;
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   const AppText({
     super.key,
@@ -12,12 +14,16 @@ class AppText extends StatelessWidget {
     this.fontSize,
     this.fontWeight,
     this.color,
+    this.maxLines,
+    this.overflow,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
+      maxLines: maxLines,
+      overflow: overflow,
       style: TextStyle(
         color: color,
         fontSize: fontSize,

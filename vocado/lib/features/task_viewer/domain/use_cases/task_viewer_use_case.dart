@@ -1,7 +1,8 @@
 import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vocado/core/errors/failure.dart';
-import 'package:vocado/features/task_viewer/domain/entities/task_viewer_entity.dart';
+import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
+import 'package:vocado/features/task_viewer/domain/entities/user_entity.dart';
 import 'package:vocado/features/task_viewer/domain/repositories/task_viewer_repository_domain.dart';
 
 
@@ -11,7 +12,7 @@ class TaskViewerUseCase {
 
   TaskViewerUseCase(this._repositoryData);
 
-   Future<Result<TaskViewerEntity, Failure>> getTaskViewer() async {
+   Future<Result<(UserEntity, List<TaskEntity>), Failure>> getTaskViewer() async {
     return _repositoryData.getTaskViewer();
   }
 }

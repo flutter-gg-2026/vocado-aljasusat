@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vocado/core/theme/app_colors.dart';
 import 'app_card.dart';
 import 'app_button.dart';
 import 'app_input.dart';
@@ -20,6 +21,8 @@ class AppWidget extends StatelessWidget {
   final Color? color;
   final String? Function(String?)? validator;
   final bool isLoading;
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   const AppWidget._({
     required this.type,
@@ -35,6 +38,8 @@ class AppWidget extends StatelessWidget {
     this.color,
     this.validator,
     this.isLoading = false,
+    this.maxLines,
+    this.overflow,
   });
 
   factory AppWidget.card({required Widget child, String? title}) {
@@ -73,15 +78,19 @@ class AppWidget extends StatelessWidget {
 
   factory AppWidget.text({
     required String text,
-    FontWeight? fontWeight,
+    int? maxLines,
+    TextOverflow? overflow,
     double? fontSize,
+    FontWeight? fontWeight,
     Color? color,
   }) {
     return AppWidget._(
       type: AppWidgetType.text,
       title: text,
-      fontWeight: fontWeight,
+      maxLines: maxLines,
+      overflow: overflow,
       fontSize: fontSize,
+      fontWeight: fontWeight,
       color: color,
     );
   }
@@ -115,7 +124,14 @@ class AppWidget extends StatelessWidget {
         );
 
       case AppWidgetType.text:
-        return AppText(text: title!);
+        return AppText(
+          text: title!,
+          maxLines: maxLines,
+          overflow: overflow,
+          fontSize: fontSize ?? 15,
+          fontWeight: fontWeight ?? FontWeight.bold,
+          color: color ?? AppColors.textMain,
+        );
     }
   }
 }
