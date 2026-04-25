@@ -8,4 +8,5 @@ class Routes {
   static const String splash = '/splash';
   static const String bottomNav = '/bottomNav';
   static const String voiceTask = '/voiceTask';
+  static const String team = '/team';
 }

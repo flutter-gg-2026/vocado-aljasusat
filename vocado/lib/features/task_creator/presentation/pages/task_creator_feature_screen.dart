@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:vocado/core/extensions/context_extensions.dart';
-import 'package:vocado/core/navigation/routers.dart';
 import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/core/widgets/bg_container.dart';
 import 'package:vocado/core/widgets/loading_widget.dart';
+import 'package:vocado/features/task_creator/domain/entities/task_creator_entity.dart';
 import 'package:vocado/features/task_creator/presentation/cubit/task_creator_cubit.dart';
 import 'package:vocado/features/task_creator/presentation/cubit/task_creator_state.dart';
 import 'package:vocado/features/task_creator/presentation/widgets/bottom_sheet_widget.dart';
@@ -17,50 +16,43 @@ import 'package:vocado/features/task_creator/presentation/widgets/task_card_widg
 class AdminHomeScreen extends StatelessWidget {
   const AdminHomeScreen({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    List<Widget> filteredTasks(String filter) {
-      List<TaskCardWidget> allTasks = [
-        TaskCardWidget(
-          title: 'Update Figma Design',
-          assignee: 'User 1',
-          gradient: AppColors.uiUxGradient,
-          onTap: () {
-            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
-          },
-        ),
-        TaskCardWidget(
-          title: 'Backend API for Gladia',
-          assignee: 'User 2',
-          gradient: AppColors.dotNetGradient,
-          onTap: () {
-            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
-          },
-        ),
-        TaskCardWidget(
-          title: 'Backend API for Gladia',
-          assignee: 'User 3',
-          gradient: AppColors.scheduleCardGradient,
-          onTap: () {
-            context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
-          },
-        ),
-        TaskCardWidget(
-          title: 'Backend API for Gladia',
-          assignee: 'User 4',
-          gradient: AppColors.digitalArtGradient,
-          onTap: () {
-            // context.showBottomSheet(height: 55.h, widget: BottomSheetWidget());
-            context.push(Routes.voiceTask);
-          },
-        ),
-      ];
+  String getTaskStatus(TaskCreatorEntity task) {
+    return task.status;
+  }
 
-      if (filter == 'All') return allTasks;
-      return allTasks.where((task) => task.assignee == filter).toList();
+  List<Color> getTaskGradient(TaskCreatorEntity task, int index) {
+    final status = getTaskStatus(task);
+
+    if (status == 'Late') {
+      return [AppColors.error, AppColors.background];
     }
 
+    final gradients = [
+      AppColors.uiUxGradient,
+      AppColors.dotNetGradient,
+      AppColors.scheduleCardGradient,
+      AppColors.digitalArtGradient,
+    ];
+
+    return gradients[index % gradients.length];
+  }
+
+  String getGreeting() {
+    final hour = DateTime.now().hour;
+
+    if (hour < 12) {
+      return 'Good Morning';
+    } else if (hour < 17) {
+      return 'Good Afternoon';
+    } else {
+      return 'Good Evening';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final cubit = context.read<TaskCreatorCubit>();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       body: BgContainer(
@@ -70,9 +62,35 @@ class AdminHomeScreen extends StatelessWidget {
               return LoadingWidget();
             }
 
-            final currentFilter = (state is TaskCreatorSuccessState)
+            if (state is TaskCreatorErrorState) {
+              return Center(
+                child: Text(
+                  state.message,
+                  style: TextStyle(
+                    color: AppColors.textMain,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              );
+            }
+
+            final List<TaskCreatorEntity> tasks =
+                state is TaskCreatorSuccessState ? state.tasks : [];
+
+            final String currentFilter = state is TaskCreatorSuccessState
                 ? state.selectedFilter
                 : 'All';
+
+            final String userName = state is TaskCreatorSuccessState
+                ? state.userName
+                : 'User';
+
+            final List<TaskCreatorEntity> filteredTasks = currentFilter == 'All'
+                ? tasks
+                : tasks.where((task) {
+                    return getTaskStatus(task) == currentFilter;
+                  }).toList();
 
             return CustomScrollView(
               slivers: [
@@ -84,7 +102,7 @@ class AdminHomeScreen extends StatelessWidget {
                       children: [
                         Gap(80),
                         Text(
-                          'Good Morning, Layan!',
+                          '${getGreeting()}, $userName!',
                           style: TextStyle(
                             color: AppColors.textMain,
                             fontWeight: FontWeight.bold,
@@ -124,22 +142,48 @@ class AdminHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  sliver: SliverGrid(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 15,
-                      mainAxisSpacing: 15,
-                      childAspectRatio: 0.85,
+                if (filteredTasks.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: Text(
+                        'No tasks found',
+                        style: TextStyle(
+                          color: AppColors.textMain.withValues(alpha: 0.7),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ),
-                    delegate: SliverChildListDelegate(
-                      filteredTasks(currentFilter),
+                  )
+                else
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    sliver: SliverGrid(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                        childAspectRatio: 0.85,
+                      ),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final task = filteredTasks[index];
+
+                        return TaskCardWidget(
+                          title: task.name ?? 'Untitled',
+                          assignee: task.assigneeName ?? task.userId,
+                          gradient: getTaskGradient(task, index),
+                          onTap: () {
+                            context.showBottomSheet(
+                              height: 55.h,
+                              widget: BottomSheetWidget(task: task),
+                            );
+                          },
+                        );
+                      }, childCount: filteredTasks.length),
                     ),
                   ),
-                ),
-
+                SliverToBoxAdapter(child: Gap(120)),
               ],
             );
           },

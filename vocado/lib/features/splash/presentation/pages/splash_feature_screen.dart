@@ -52,7 +52,11 @@ class SplashFeatureScreen extends StatelessWidget {
                 height: 10.h,
                 width: 20.sw,
                 shape: .circle,
-                child: Icon(Icons.arrow_forward, size: 40),
+                child: Icon(
+                  Icons.arrow_forward,
+                  size: 40,
+                  color: AppColors.accentAccent,
+                ),
               ),
             ),
           ],

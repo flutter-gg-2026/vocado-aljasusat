@@ -5,20 +5,33 @@ part 'task_creator_model.g.dart';
 
 @freezed
 abstract class TaskCreatorModel with _$TaskCreatorModel {
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory TaskCreatorModel({
     required int id,
-    required String firstName,
-    required String lastName,
-    
+    @Default('') String userId,
+    @Default('Untitled') String name,
+    @Default('') String dueDate,
+    @Default('Pending') String status,
+    String? assigneeName,
+    String? assignedBy,
+    String? description,
   }) = _TaskCreatorModel;
 
-  factory TaskCreatorModel.fromJson(Map<String, Object?> json) => _$TaskCreatorModelFromJson(json);
+  factory TaskCreatorModel.fromJson(Map<String, dynamic> json) =>
+      _$TaskCreatorModelFromJson(json);
 }
-
-
 
 extension TaskCreatorModelMapper on TaskCreatorModel {
   TaskCreatorEntity toEntity() {
-    return TaskCreatorEntity(id: id, firstName: firstName, lastName: lastName);
+    return TaskCreatorEntity(
+      id: id,
+      userId: userId,
+      name: name,
+      dueDate: dueDate,
+      status: status,
+      assignedBy: assignedBy,
+      description: description,
+      assigneeName: assigneeName,
+    );
   }
-  }
+}

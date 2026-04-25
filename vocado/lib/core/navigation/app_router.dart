@@ -14,6 +14,8 @@ import 'package:vocado/features/bottom_nav/presentation/pages/bottom_nav_feature
 import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
 import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';
+import 'package:vocado/features/team/presentation/pages/team_feature_screen.dart';
+import 'package:vocado/features/team/presentation/cubit/team_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -30,7 +32,7 @@ class AppRouter {
       GoRoute(
         path: Routes.taskViewer,
         builder: (context, state) => BlocProvider(
-          create: (context) => TaskViewerCubit(GetIt.I.get()),
+          create: (context) => TaskViewerCubit(GetIt.I.get())..getTasks(),
           child: const TaskViewerFeatureScreen(),
         ),
       ),
@@ -45,8 +47,14 @@ class AppRouter {
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => BottomNavCubit(GetIt.I.get())),
-              BlocProvider(create: (_) => TaskCreatorCubit(GetIt.I.get())),
+              BlocProvider(
+                create: (_) =>
+                    TaskCreatorCubit(GetIt.I.get())..getTaskCreatorMethod(),
+              ),
               BlocProvider(create: (_) => VoiceTaskCubit(GetIt.I.get())),
+              BlocProvider(
+                create: (_) => TeamCubit(GetIt.I.get())..getTeamMethod(),
+              ),
             ],
             child: child,
           );
@@ -59,10 +67,7 @@ class AppRouter {
 
           GoRoute(
             path: Routes.taskCreator,
-            builder: (context, state) => BlocProvider(
-              create: (context) => TaskCreatorCubit(GetIt.I.get())..getTaskCreatorMethod(),
-              child: const AdminHomeScreen(),
-            ),
+            builder: (context, state) => const AdminHomeScreen(),
           ),
 
           GoRoute(
@@ -71,6 +76,11 @@ class AppRouter {
               create: (context) => VoiceTaskCubit(GetIt.I.get()),
               child: const VoiceTaskFeatureScreen(),
             ),
+          ),
+
+          GoRoute(
+            path: Routes.team,
+            builder: (context, state) => const TeamFeatureScreen(),
           ),
         ],
       ),

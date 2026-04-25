@@ -6,6 +6,7 @@ class TaskCardWidget extends StatelessWidget {
   final String assignee;
   final List<Color> gradient;
   final void Function()? onTap;
+
   const TaskCardWidget({
     super.key,
     required this.title,
@@ -17,9 +18,10 @@ class TaskCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(25),
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           gradient: LinearGradient(
@@ -32,38 +34,47 @@ class TaskCardWidget extends StatelessWidget {
           ),
         ),
         child: Column(
-          crossAxisAlignment: .start,
-          mainAxisAlignment: .spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              mainAxisAlignment: .spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Text(
-                    assignee,
-                    style: TextStyle(
-                      color: AppColors.textMain,
-                      fontSize: 10,
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      assignee,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: AppColors.textMain,
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 ),
                 CircleAvatar(
                   radius: 14,
                   backgroundColor: AppColors.textMain,
-                  child: Icon(Icons.arrow_outward, size: 16, color: Colors.black),
+                  child: const Icon(
+                    Icons.arrow_outward,
+                    size: 16,
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),
             Text(
               title,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: AppColors.textMain,
                 fontWeight: FontWeight.bold,

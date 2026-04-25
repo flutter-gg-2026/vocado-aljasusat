@@ -6,6 +6,7 @@ import 'package:vocado/features/task_creator/di/task_creator_di.dart';
 import 'package:vocado/features/task_viewer/di/task_viewer_di.dart';
 import 'package:vocado/features/bottom_nav/di/bottom_nav_di.dart';
 import 'package:vocado/features/voice_task/di/voice_task_di.dart';
+import 'package:vocado/features/team/di/team_di.dart';
 
 @InjectableInit(
   initializerName: 'init',
@@ -18,9 +19,11 @@ Future<void> configureDependencies() async {
 
   getIt.init();
 
-  configureAuth(getIt);
-  configureTaskCreator(getIt);
-  configureTaskViewer(getIt);
-  configureBottomNav(getIt);
-  configureVoiceTask(getIt);
+    configureAuth(getIt);
+    configureTaskCreator(getIt);
+    configureTaskViewer(getIt);
+    configureBottomNav(getIt);
+    configureVoiceTask(getIt);
+    configureTeam(getIt);
 }
+

@@ -9,7 +9,7 @@ part 'task_viewer_state.dart';
 class TaskViewerCubit extends Cubit<TaskViewerState> {
   final TaskUseCase useCase;
 
-  TaskViewerCubit(this.useCase) : super(TaskInitial());
+  TaskViewerCubit(this.useCase) : super(TaskInitial()) ;
 
   List<TaskEntity> allTasks = [];
 
@@ -64,13 +64,13 @@ class TaskViewerCubit extends Cubit<TaskViewerState> {
           return isPending;
 
         case TaskStatus.InProgress:
-          return isInProgress;
+          return isInProgress && !isLate;
 
         case TaskStatus.Completed:
           return isCompleted;
 
         case TaskStatus.Late:
-          return isLate;
+          return isLate && !isCompleted;
       }
     }).toList();
   }

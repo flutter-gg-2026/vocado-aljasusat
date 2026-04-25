@@ -8,22 +8,12 @@ import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit
 import 'package:vocado/features/task_viewer/presentation/widgets/task_tabs.dart';
 import 'package:vocado/features/task_viewer/presentation/widgets/top_task_card.dart';
 
-class TaskViewerFeatureScreen extends StatefulWidget {
-  const TaskViewerFeatureScreen({super.key});
 
-  @override
-  State<TaskViewerFeatureScreen> createState() =>
-      _TaskViewerFeatureScreenState();
-}
 
-class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
+class TaskViewerFeatureScreen extends StatelessWidget {
+   const TaskViewerFeatureScreen({super.key});
   @override
-  void initState() {
-    context.read<TaskViewerCubit>().getTasks();
-    super.initState();
-  }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -112,7 +102,7 @@ class _TaskViewerFeatureScreenState extends State<TaskViewerFeatureScreen> {
                 );
               }
 
-              return SizedBox();
+             return LoadingWidget();
             },
           ),
         ),
