@@ -9,37 +9,28 @@ import 'package:vocado/features/task_creator/presentation/pages/task_creator_fea
 import 'package:vocado/features/task_creator/presentation/cubit/task_creator_cubit.dart';
 import 'package:vocado/features/task_viewer/presentation/pages/task_viewer_feature_screen.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
+
 import 'package:vocado/features/voice_task/presentation/pages/voice_task_feature_screen.dart';
 import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';
 
+import 'package:vocado/features/splash/presentation/pages/splash_feature_screen.dart';
+import 'package:vocado/features/bottom_nav/presentation/pages/bottom_nav_feature_screen.dart';
+import 'package:vocado/features/bottom_nav/presentation/cubit/bottom_nav_cubit.dart';
 
 
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: Routes.voiceTask,
-    routes: [
-      GoRoute(
-        path: Routes.splash,
-        builder: (context, state) {
-          return Scaffold(body: Center(child: Text("splash screen")));
-        }, // SplashScreen
-      ),
 
+    routes: [
       GoRoute(
         path: Routes.auth,
         builder: (context, state) => BlocProvider(
-          create: (context) => AuthCubit(GetIt.I.get()),
+          create: (context) => GetIt.I.get<AuthCubit>(),
           child: const AuthFeatureScreen(),
         ),
       ),
 
-      GoRoute(
-        path: Routes.taskCreator,
-        builder: (context, state) => BlocProvider(
-          create: (context) => TaskCreatorCubit(GetIt.I.get()),
-          child: const TaskCreatorFeatureScreen(),
-        ),
-      ),
 
       GoRoute(
         path: Routes.taskViewer,
@@ -48,8 +39,40 @@ class AppRouter {
           child: const TaskViewerFeatureScreen(),
         ),
       ),
+
+
+      GoRoute(
+        path: Routes.splash,
+        builder: (context, state) => const SplashFeatureScreen(),
+      ),
+
+
+      ShellRoute(
+        builder: (context, state, child) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => BottomNavCubit(GetIt.I.get())),
+              BlocProvider(create: (_) => TaskCreatorCubit(GetIt.I.get())),
+            ],
+            child: child,
+          );
+        },
+        routes: [
+          GoRoute(
+            path: Routes.bottomNav,
+            builder: (context, state) => BottomNav(),
+          ),
+
+          GoRoute(
+            path: Routes.taskCreator,
+            builder: (context, state) => BlocProvider(
+              create: (context) => TaskCreatorCubit(GetIt.I.get()),
+              child: const AdminHomeScreen(),
+            ),
+          ),
+        ],
+      ),
     
-  
 
   GoRoute(
     path: Routes.voiceTask,

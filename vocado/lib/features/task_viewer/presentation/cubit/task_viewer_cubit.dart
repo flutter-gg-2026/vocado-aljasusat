@@ -6,7 +6,9 @@ import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
 class TaskViewerCubit extends Cubit<TaskViewerState> {
   final TaskViewerUseCase _useCase;
 
-  TaskViewerCubit(this._useCase) : super(TaskViewerInitialState());
+  TaskViewerCubit(this._useCase) : super(TaskViewerInitialState()){
+     getTasks();
+  }
 
   bool isExpanded = false;
 

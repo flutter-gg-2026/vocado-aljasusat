@@ -14,9 +14,13 @@ class TaskCreatorCubit extends Cubit<TaskCreatorState> {
         //here is when success result
       },
       (whenError) {
-       //here is when error result
+        //here is when error result
       },
     );
+  }
+
+  void changeFilter(String filter) {
+    emit(TaskCreatorSuccessState(selectedFilter: filter));
   }
 
   @override

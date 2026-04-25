@@ -1,6 +1,6 @@
-import 'package:vocado/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:vocado/core/theme/app_colors.dart';
 
 class LoadingWidgetOverlay {
   OverlayEntry? _overlayEntry;
@@ -25,16 +25,16 @@ class LoadingWidgetOverlay {
       builder: (context) => Stack(
         children: [
           ModalBarrier(
-            color: AppColors.background.withAlpha(225),
+            color: AppColors.textMain.withAlpha(225),
             dismissible: false,
           ),
           Center(
             child: LoadingAnimationWidget.discreteCircle(
               // leftDotColor: const Color(0xFF1A1A3F),
               // rightDotColor: const Color(0xFFEA3799),
-              secondRingColor: AppColors.secondary,
-              thirdRingColor: AppColors.surface,
-              color: AppColors.surface,
+              secondRingColor: AppColors.textSecondary,
+              thirdRingColor: AppColors.calendarSelection,
+              color: AppColors.calendarSelection,
               size: 50,
             ),
           ),
@@ -61,15 +61,10 @@ class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: LoadingAnimationWidget.discreteCircle(
-        // leftDotColor: const Color(0xFF1A1A3F),
-        // rightDotColor: const Color(0xFFEA3799),
-        secondRingColor: AppColors.secondary,
-        thirdRingColor: AppColors.surface,
-        color: AppColors.surface,
-        size: size ?? 50,
+      child: LoadingAnimationWidget.fourRotatingDots(
+        color: AppColors.accentAccent,
+        size: 40,
       ),
     );
   }
 }
-

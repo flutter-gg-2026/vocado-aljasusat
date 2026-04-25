@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vocado/core/theme/app_color.dart';
+import 'package:vocado/core/theme/app_colors.dart';
+
 import 'package:vocado/features/voice_task/presentation/widgets/error_view.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/idle_view.dart';
 import 'package:vocado/features/voice_task/presentation/widgets/recording_view.dart';

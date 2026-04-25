@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:vocado/features/task_viewer/sub/task_filter/domain/entities/task_filter_entity.dart';
-import 'package:vocado/features/task_viewer/sub/task_filter/presentation/cubit/task_filter_cubit.dart';
 
 abstract class TaskFilterState extends Equatable {
   const TaskFilterState();
@@ -11,7 +10,7 @@ abstract class TaskFilterState extends Equatable {
 class TaskFilterLoadedState extends TaskFilterState {
   final List<TaskFilterEntity> tasks;
 
-  TaskFilterLoadedState({
+  const TaskFilterLoadedState({
     required this.tasks,
   });
 }

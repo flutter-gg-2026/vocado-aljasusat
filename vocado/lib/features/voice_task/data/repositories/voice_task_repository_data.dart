@@ -1,8 +1,5 @@
-import 'package:fpdart/fpdart.dart';
+
 import 'package:injectable/injectable.dart';
-import 'package:multiple_result/multiple_result.dart';
-import 'package:vocado/core/errors/network_exceptions.dart';
-import 'package:vocado/core/errors/failure.dart';
 import 'package:vocado/features/voice_task/domain/entities/voice_task_entity.dart';
 
 import 'package:vocado/features/voice_task/data/datasources/voice_task_remote_data_source.dart';

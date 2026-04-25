@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MicButton extends StatelessWidget {
-  const MicButton();
+  const MicButton({super.key});
+
+
 
   @override
   Widget build(BuildContext context) {

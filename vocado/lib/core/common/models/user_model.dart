@@ -1,0 +1,25 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vocado/core/common/entities/user_entity.dart';
+
+part 'user_model.freezed.dart';
+part 'user_model.g.dart';
+
+@freezed
+abstract class UserModel with _$UserModel {
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  const factory UserModel({
+    required String id,
+    required String name,
+    required String email,
+    required String role,
+  }) = _UserModel;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
+}
+
+extension UserModelMapper on UserModel {
+  UserEntity toEntity() {
+    return UserEntity(id: id, name: name, email: email, role: role);
+  }
+}

@@ -2,7 +2,6 @@ import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/services/local_keys_service.dart';
 import 'package:vocado/features/task_viewer/data/models/task_viewer_model.dart';
-import 'package:vocado/core/errors/network_exceptions.dart';
 
 
 abstract class BaseTaskViewerRemoteDataSource {

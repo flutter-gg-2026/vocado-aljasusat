@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:vocado/core/constants/app_colors.dart';
+import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/core/widgets/app_widget.dart';
 import 'package:vocado/features/voice_task/domain/entities/voice_task_entity.dart';
 import 'package:vocado/features/voice_task/presentation/cubit/voice_task_cubit.dart';

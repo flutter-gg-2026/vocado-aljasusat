@@ -19,8 +19,12 @@ import 'package:vocado/features/auth/data/repositories/auth_repository_data.dart
     as _i694;
 import 'package:vocado/features/auth/domain/repositories/auth_repository_domain.dart'
     as _i272;
-import 'package:vocado/features/auth/domain/use_cases/auth_use_case.dart'
-    as _i970;
+import 'package:vocado/features/auth/domain/use_cases/login_use_case.dart'
+    as _i775;
+import 'package:vocado/features/auth/domain/use_cases/sign_up_use_case.dart'
+    as _i294;
+import 'package:vocado/features/auth/presentation/cubit/auth_cubit.dart'
+    as _i992;
 import 'package:vocado/features/auth/sub/login/data/datasources/login_remote_data_source.dart'
     as _i1020;
 import 'package:vocado/features/auth/sub/login/data/repositories/login_repository_data.dart'
@@ -45,14 +49,11 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i906.BaseAuthRemoteDataSource>(
+      () => _i906.AuthRemoteDataSource(gh<_i454.SupabaseClient>()),
+    );
     gh.lazySingleton<_i1020.BaseLoginRemoteDataSource>(
       () => _i1020.LoginRemoteDataSource(
-        gh<_i140.LocalKeysService>(),
-        gh<_i454.SupabaseClient>(),
-      ),
-    );
-    gh.lazySingleton<_i906.BaseAuthRemoteDataSource>(
-      () => _i906.AuthRemoteDataSource(
         gh<_i140.LocalKeysService>(),
         gh<_i454.SupabaseClient>(),
       ),
@@ -75,11 +76,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i595.LoginRepositoryDomain>(
       () => _i326.LoginRepositoryData(gh<_i1020.BaseLoginRemoteDataSource>()),
     );
-    gh.lazySingleton<_i970.AuthUseCase>(
-      () => _i970.AuthUseCase(gh<_i272.AuthRepositoryDomain>()),
+    gh.lazySingleton<_i775.LoginUseCase>(
+      () => _i775.LoginUseCase(gh<_i272.AuthRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i294.SignUpUseCase>(
+      () => _i294.SignUpUseCase(gh<_i272.AuthRepositoryDomain>()),
     );
     gh.lazySingleton<_i285.LoginUseCase>(
       () => _i285.LoginUseCase(gh<_i595.LoginRepositoryDomain>()),
+    );
+    gh.factory<_i992.AuthCubit>(
+      () =>
+          _i992.AuthCubit(gh<_i775.LoginUseCase>(), gh<_i294.SignUpUseCase>()),
     );
     return this;
   }

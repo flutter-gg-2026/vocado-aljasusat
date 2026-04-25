@@ -1,11 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vocado/core/services/gemini_service.dart';
-import 'package:vocado/core/services/local_keys_service.dart';
 import 'package:vocado/core/services/speech_service.dart';
 import 'package:vocado/core/services/voice_service.dart';
 import 'package:vocado/features/voice_task/data/models/voice_task_model.dart';
-import 'package:vocado/core/errors/network_exceptions.dart';
 
 abstract class BaseVoiceTaskRemoteDataSource {
   Future<VoiceTaskModel> getVoiceTask();
@@ -18,6 +16,7 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
   final SpeechService speechService;
   final GeminiService geminiService;
   final SupabaseClient _supabase;
+
   VoiceTaskRemoteDataSource(
     this.voiceService,
     this.speechService,

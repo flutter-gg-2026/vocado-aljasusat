@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vocado/core/network/api_endpoints.dart';
@@ -9,7 +11,6 @@ class SpeechService {
 
   SpeechService(this.dioClient);
 
-  /// 1. رفع الصوت
   Future<String> uploadAudio(String filePath) async {
     final formData = FormData.fromMap({
       'audio': await MultipartFile.fromFile(filePath),
@@ -20,7 +21,6 @@ class SpeechService {
     return response.data['audio_url'];
   }
 
-  /// 2. بدء التحويل
   Future<String> startTranscription(String audioUrl) async {
     final response = await dioClient.post(
       ApiEndpoints.transcription,
@@ -30,14 +30,13 @@ class SpeechService {
     return response.data['id'];
   }
 
-  /// 3. جلب النتيجة
   Future<String> getResult(String id) async {
-    final response = await dioClient.get('${ApiEndpoints.transcription}/$id');
+    final response =
+        await dioClient.get('${ApiEndpoints.transcription}/$id');
 
     return response.data['result']?['transcription']?['full_transcript'] ?? '';
   }
 
-  /// 4. العملية كاملة
   Future<String> processAudio(String filePath) async {
     final audioUrl = await uploadAudio(filePath);
     print("Uploaded: $audioUrl");
@@ -48,7 +47,8 @@ class SpeechService {
     for (int i = 0; i < 15; i++) {
       await Future.delayed(const Duration(seconds: 2));
 
-      final response = await dioClient.get('${ApiEndpoints.transcription}/$id');
+      final response =
+          await dioClient.get('${ApiEndpoints.transcription}/$id');
 
       print("Polling: ${response.data}");
 
@@ -58,7 +58,7 @@ class SpeechService {
         final text =
             response.data['result']?['transcription']?['full_transcript'] ?? '';
 
-        print(" FINAL TEXT: $text");
+        print("FINAL TEXT: $text");
         return text;
       }
     }
