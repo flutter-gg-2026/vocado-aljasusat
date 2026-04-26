@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:vocado/core/services/authservice.dart';
 import '../models/task_model.dart';
 
 abstract class BaseTaskRemoteDataSource {
@@ -10,15 +11,16 @@ abstract class BaseTaskRemoteDataSource {
 @LazySingleton(as: BaseTaskRemoteDataSource)
 class TaskRemoteDataSource implements BaseTaskRemoteDataSource {
   final SupabaseClient _supabase;
-
-  TaskRemoteDataSource(this._supabase);
+final AuthService authService;
+  TaskRemoteDataSource(this._supabase,this.authService);
 
   @override
   Future<List<TaskModel>> getTasks() async {
-    final user = _supabase.auth.currentUser;
+   final user = await authService.getCurrentUser();
 
-    if (user == null) {
-      return [];
+if (user == null) {
+  throw Exception("Session expired");
+
     }
 
     final response = await _supabase
@@ -42,11 +44,11 @@ class TaskRemoteDataSource implements BaseTaskRemoteDataSource {
 
   @override
   Future<void> updateStatus(int id, String status) async {
-    final user = _supabase.auth.currentUser;
+    final user = await authService.getCurrentUser();
 
-    if (user == null) {
-      return;
-    }
+if (user == null) {
+  throw Exception("Session expired");
+}
 
     final response = await _supabase
         .from('task')

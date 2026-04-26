@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:vocado/core/services/authservice.dart';
 import 'package:vocado/features/task_creator/data/models/task_creator_model.dart';
 import 'package:vocado/core/errors/network_exceptions.dart';
 
@@ -18,24 +19,25 @@ abstract class BaseTaskCreatorRemoteDataSource {
 @LazySingleton(as: BaseTaskCreatorRemoteDataSource)
 class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
   final SupabaseClient _supabase;
-
-  TaskCreatorRemoteDataSource(this._supabase);
+final AuthService authService;
+  TaskCreatorRemoteDataSource( this.authService,this._supabase);
 
   @override
   Future<List<TaskCreatorModel>> getTaskCreator() async {
+    final session = Supabase.instance.client.auth.currentSession;
+print(session);
     try {
       final response = await _supabase
-          .from('task')
-          .select('''
-            id,
-            name,
-            status,
-            due_date,
-            user_id,
-            assigned_by,
-            description,
-            users(name)
-          ''')
+    .from('task')
+    .select('''
+      id,
+      name,
+      status,
+      due_date,
+      user_id,
+      assigned_by,
+      description
+    ''')
           .order('id', ascending: false);
 
       final today = DateTime.now();
@@ -118,7 +120,7 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
   @override
   Future<String> getCurrentUserName() async {
     try {
-      final user = _supabase.auth.currentUser;
+      final user = await authService.getCurrentUser();
 
       if (user == null) return 'User';
 

@@ -17,6 +17,7 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 import '../network/dio_client.dart' as _i667;
+import '../services/authservice.dart' as _i427;
 import '../services/gemini_service.dart' as _i846;
 import '../services/local_keys_service.dart' as _i945;
 import '../services/speech_service.dart' as _i902;
@@ -43,6 +44,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i950.VoiceService>(() => _i950.VoiceService());
     gh.lazySingleton<_i846.GeminiService>(
       () => _i846.GeminiService(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i427.AuthService>(
+      () => _i427.AuthService(gh<_i454.SupabaseClient>()),
     );
     gh.lazySingleton<_i902.SpeechService>(
       () => _i902.SpeechService(gh<_i667.DioClient>()),

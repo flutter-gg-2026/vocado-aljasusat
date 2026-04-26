@@ -12,6 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
+import 'package:vocado/core/services/authservice.dart' as _i65;
 import 'package:vocado/features/task_viewer/data/datasources/task_viewer_remote_data_source.dart'
     as _i262;
 import 'package:vocado/features/task_viewer/data/repositories/task_viewer_repository_data.dart'
@@ -31,7 +32,10 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i262.BaseTaskRemoteDataSource>(
-      () => _i262.TaskRemoteDataSource(gh<_i454.SupabaseClient>()),
+      () => _i262.TaskRemoteDataSource(
+        gh<_i454.SupabaseClient>(),
+        gh<_i65.AuthService>(),
+      ),
     );
     gh.lazySingleton<_i476.TaskRepository>(
       () => _i132.TaskRepositoryImpl(gh<_i262.BaseTaskRemoteDataSource>()),

@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:vocado/core/services/authservice.dart';
 import 'package:vocado/core/services/gemini_service.dart';
 import 'package:vocado/core/services/speech_service.dart';
 import 'package:vocado/core/services/voice_service.dart';
@@ -17,12 +18,13 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
   final SpeechService speechService;
   final GeminiService geminiService;
   final SupabaseClient _supabase;
-
+final AuthService authService;
   VoiceTaskRemoteDataSource(
     this.voiceService,
     this.speechService,
     this.geminiService,
     this._supabase,
+     this.authService,
   );
 
   String mapStatus(String status) {
@@ -57,10 +59,11 @@ class VoiceTaskRemoteDataSource implements BaseVoiceTaskRemoteDataSource {
 
   @override
 Future<void> insertTask(VoiceTaskModel task) async {
-  final authUser = _supabase.auth.currentUser;
-  if (authUser == null) {
-    throw Exception("User not logged in");
-  }
+  final authUser = await authService.getCurrentUser();
+
+if (authUser == null) {
+  throw Exception("Session expired");
+}
 
   final sender = await _supabase
       .from('users')
@@ -70,20 +73,21 @@ Future<void> insertTask(VoiceTaskModel task) async {
 
   final senderId = sender?['id'];
   final senderName = sender?['name'] ?? authUser.email ?? 'User';
+final receiver = await _supabase
+    .from('users')
+    .select('id, name')
+    .ilike('name', task.assignedTo)
+    .maybeSingle();
 
-  final receiver = await _supabase
-      .from('users')
-      .select('user_id, name')
-      .ilike('name', task.assignedTo)
-      .maybeSingle();
+final assigneeId = receiver?['id'];
 
-  final assigneeAuthId = receiver?['user_id'];
+  //final assigneeAuthId = receiver?['user_id'];
   final assigneeName = receiver?['name'] ?? 'Unassigned';
 
   await _supabase.from('task').insert({
     'user_id': senderId,
     'assigned_by_id': senderId,
-    'assignee_id': assigneeAuthId,
+    'assignee_id': assigneeId,
     'assigned_by': senderName,
     'assignee': assigneeName,
     'name': task.title,
