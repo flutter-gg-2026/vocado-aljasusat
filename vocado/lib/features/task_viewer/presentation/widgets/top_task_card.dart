@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
-import 'package:vocado/core/widgets/app_widget.dart';
-import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
+import '../../presentation/cubit/task_viewer_cubit.dart';
 
 class TopTaskCard extends StatelessWidget {
   final int id;
@@ -22,41 +20,45 @@ class TopTaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      child: AppWidget.card(
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white.withAlpha(8),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.white.withAlpha(10)),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppWidget.text(
-              text: title,
+            Text(
+              title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-            ),
-            const Gap(4),
-            AppWidget.text(text: date),
-            const Gap(4),
-            DropdownButtonFormField<String>(
-              isExpanded: true,
-              hint: const Text(
-                "Select status",
-                style: TextStyle(color: Colors.white70),
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
-              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(height: 6),
+            Text(date, style: const TextStyle(color: Colors.white70)),
+            const SizedBox(height: 10),
+            DropdownButtonFormField<String>(
+              initialValue: status,
+              isExpanded: true,
               dropdownColor: const Color(0xFF1E1E1E),
+              style: const TextStyle(color: Colors.white),
               items: const [
+                DropdownMenuItem(value: "Pending", child: Text("Pending")),
                 DropdownMenuItem(
-                  value: "in_progress",
-                  child: Text(
-                    "In Progress",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  value: "In Progress",
+                  child: Text("In Progress"),
                 ),
-                DropdownMenuItem(
-                  value: "done",
-                  child: Text("Done", style: TextStyle(color: Colors.white)),
-                ),
+                DropdownMenuItem(value: "Completed", child: Text("Completed")),
+                DropdownMenuItem(value: "Late", child: Text("Late")),
               ],
               onChanged: (value) {
-                context.read<TaskViewerCubit>().updateStatus(id, value!);
+                if (value == null) return;
+                context.read<TaskViewerCubit>().updateStatus(id, value);
               },
             ),
           ],

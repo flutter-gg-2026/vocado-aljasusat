@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'task_filter_model.dart';
+part of 'task_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'task_filter_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$TaskFilterModel {
+mixin _$TaskModel {
 
  int get id; String get title; String get description; String get assignedBy; DateTime get deadline; String get status;
-/// Create a copy of TaskFilterModel
+/// Create a copy of TaskModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$TaskFilterModelCopyWith<TaskFilterModel> get copyWith => _$TaskFilterModelCopyWithImpl<TaskFilterModel>(this as TaskFilterModel, _$identity);
+$TaskModelCopyWith<TaskModel> get copyWith => _$TaskModelCopyWithImpl<TaskModel>(this as TaskModel, _$identity);
 
-  /// Serializes this TaskFilterModel to a JSON map.
+  /// Serializes this TaskModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskFilterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.assignedBy, assignedBy) || other.assignedBy == assignedBy)&&(identical(other.deadline, deadline) || other.deadline == deadline)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.assignedBy, assignedBy) || other.assignedBy == assignedBy)&&(identical(other.deadline, deadline) || other.deadline == deadline)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,id,title,description,assignedBy,dead
 
 @override
 String toString() {
-  return 'TaskFilterModel(id: $id, title: $title, description: $description, assignedBy: $assignedBy, deadline: $deadline, status: $status)';
+  return 'TaskModel(id: $id, title: $title, description: $description, assignedBy: $assignedBy, deadline: $deadline, status: $status)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $TaskFilterModelCopyWith<$Res>  {
-  factory $TaskFilterModelCopyWith(TaskFilterModel value, $Res Function(TaskFilterModel) _then) = _$TaskFilterModelCopyWithImpl;
+abstract mixin class $TaskModelCopyWith<$Res>  {
+  factory $TaskModelCopyWith(TaskModel value, $Res Function(TaskModel) _then) = _$TaskModelCopyWithImpl;
 @useResult
 $Res call({
  int id, String title, String description, String assignedBy, DateTime deadline, String status
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$TaskFilterModelCopyWithImpl<$Res>
-    implements $TaskFilterModelCopyWith<$Res> {
-  _$TaskFilterModelCopyWithImpl(this._self, this._then);
+class _$TaskModelCopyWithImpl<$Res>
+    implements $TaskModelCopyWith<$Res> {
+  _$TaskModelCopyWithImpl(this._self, this._then);
 
-  final TaskFilterModel _self;
-  final $Res Function(TaskFilterModel) _then;
+  final TaskModel _self;
+  final $Res Function(TaskModel) _then;
 
-/// Create a copy of TaskFilterModel
+/// Create a copy of TaskModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? title = null,Object? description = null,Object? assignedBy = null,Object? deadline = null,Object? status = null,}) {
   return _then(_self.copyWith(
@@ -80,8 +80,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [TaskFilterModel].
-extension TaskFilterModelPatterns on TaskFilterModel {
+/// Adds pattern-matching-related methods to [TaskModel].
+extension TaskModelPatterns on TaskModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -94,10 +94,10 @@ extension TaskFilterModelPatterns on TaskFilterModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TaskFilterModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _TaskModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _TaskFilterModel() when $default != null:
+case _TaskModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -116,10 +116,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TaskFilterModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _TaskModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _TaskFilterModel():
+case _TaskModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -137,10 +137,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TaskFilterModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _TaskModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _TaskFilterModel() when $default != null:
+case _TaskModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -160,7 +160,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String title,  String description,  String assignedBy,  DateTime deadline,  String status)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _TaskFilterModel() when $default != null:
+case _TaskModel() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.assignedBy,_that.deadline,_that.status);case _:
   return orElse();
 
@@ -181,7 +181,7 @@ return $default(_that.id,_that.title,_that.description,_that.assignedBy,_that.de
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String title,  String description,  String assignedBy,  DateTime deadline,  String status)  $default,) {final _that = this;
 switch (_that) {
-case _TaskFilterModel():
+case _TaskModel():
 return $default(_that.id,_that.title,_that.description,_that.assignedBy,_that.deadline,_that.status);case _:
   throw StateError('Unexpected subclass');
 
@@ -201,7 +201,7 @@ return $default(_that.id,_that.title,_that.description,_that.assignedBy,_that.de
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String title,  String description,  String assignedBy,  DateTime deadline,  String status)?  $default,) {final _that = this;
 switch (_that) {
-case _TaskFilterModel() when $default != null:
+case _TaskModel() when $default != null:
 return $default(_that.id,_that.title,_that.description,_that.assignedBy,_that.deadline,_that.status);case _:
   return null;
 
@@ -213,9 +213,9 @@ return $default(_that.id,_that.title,_that.description,_that.assignedBy,_that.de
 /// @nodoc
 @JsonSerializable()
 
-class _TaskFilterModel implements TaskFilterModel {
-  const _TaskFilterModel({required this.id, required this.title, required this.description, required this.assignedBy, required this.deadline, required this.status});
-  factory _TaskFilterModel.fromJson(Map<String, dynamic> json) => _$TaskFilterModelFromJson(json);
+class _TaskModel implements TaskModel {
+  const _TaskModel({required this.id, required this.title, required this.description, required this.assignedBy, required this.deadline, required this.status});
+  factory _TaskModel.fromJson(Map<String, dynamic> json) => _$TaskModelFromJson(json);
 
 @override final  int id;
 @override final  String title;
@@ -224,20 +224,20 @@ class _TaskFilterModel implements TaskFilterModel {
 @override final  DateTime deadline;
 @override final  String status;
 
-/// Create a copy of TaskFilterModel
+/// Create a copy of TaskModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$TaskFilterModelCopyWith<_TaskFilterModel> get copyWith => __$TaskFilterModelCopyWithImpl<_TaskFilterModel>(this, _$identity);
+_$TaskModelCopyWith<_TaskModel> get copyWith => __$TaskModelCopyWithImpl<_TaskModel>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$TaskFilterModelToJson(this, );
+  return _$TaskModelToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskFilterModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.assignedBy, assignedBy) || other.assignedBy == assignedBy)&&(identical(other.deadline, deadline) || other.deadline == deadline)&&(identical(other.status, status) || other.status == status));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _TaskModel&&(identical(other.id, id) || other.id == id)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.assignedBy, assignedBy) || other.assignedBy == assignedBy)&&(identical(other.deadline, deadline) || other.deadline == deadline)&&(identical(other.status, status) || other.status == status));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -246,15 +246,15 @@ int get hashCode => Object.hash(runtimeType,id,title,description,assignedBy,dead
 
 @override
 String toString() {
-  return 'TaskFilterModel(id: $id, title: $title, description: $description, assignedBy: $assignedBy, deadline: $deadline, status: $status)';
+  return 'TaskModel(id: $id, title: $title, description: $description, assignedBy: $assignedBy, deadline: $deadline, status: $status)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$TaskFilterModelCopyWith<$Res> implements $TaskFilterModelCopyWith<$Res> {
-  factory _$TaskFilterModelCopyWith(_TaskFilterModel value, $Res Function(_TaskFilterModel) _then) = __$TaskFilterModelCopyWithImpl;
+abstract mixin class _$TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
+  factory _$TaskModelCopyWith(_TaskModel value, $Res Function(_TaskModel) _then) = __$TaskModelCopyWithImpl;
 @override @useResult
 $Res call({
  int id, String title, String description, String assignedBy, DateTime deadline, String status
@@ -265,17 +265,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$TaskFilterModelCopyWithImpl<$Res>
-    implements _$TaskFilterModelCopyWith<$Res> {
-  __$TaskFilterModelCopyWithImpl(this._self, this._then);
+class __$TaskModelCopyWithImpl<$Res>
+    implements _$TaskModelCopyWith<$Res> {
+  __$TaskModelCopyWithImpl(this._self, this._then);
 
-  final _TaskFilterModel _self;
-  final $Res Function(_TaskFilterModel) _then;
+  final _TaskModel _self;
+  final $Res Function(_TaskModel) _then;
 
-/// Create a copy of TaskFilterModel
+/// Create a copy of TaskModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? title = null,Object? description = null,Object? assignedBy = null,Object? deadline = null,Object? status = null,}) {
-  return _then(_TaskFilterModel(
+  return _then(_TaskModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable

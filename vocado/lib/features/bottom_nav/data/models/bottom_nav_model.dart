@@ -9,13 +9,11 @@ abstract class BottomNavModel with _$BottomNavModel {
     required int id,
     required String firstName,
     required String lastName,
-    
   }) = _BottomNavModel;
 
-  factory BottomNavModel.fromJson(Map<String, Object?> json) => _$BottomNavModelFromJson(json);
+  factory BottomNavModel.fromJson(Map<String, Object?> json) =>
+      _$BottomNavModelFromJson(json);
 }
-
-
 
 extension BottomNavModelMapper on BottomNavModel {
   BottomNavEntity toEntity() {

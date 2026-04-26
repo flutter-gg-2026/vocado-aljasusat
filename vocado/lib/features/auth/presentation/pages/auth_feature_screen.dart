@@ -28,6 +28,9 @@ class AuthFeatureScreen extends HookWidget {
     final passwordLoginController = useTextEditingController(
       text: 'Asdfg09123',
     );
+    
+// Amaal0088@gmail.com
+// Amaal0852@
 
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();

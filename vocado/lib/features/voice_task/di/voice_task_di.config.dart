@@ -11,6 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 import 'package:vocado/core/services/gemini_service.dart' as _i443;
 import 'package:vocado/core/services/speech_service.dart' as _i1043;
 import 'package:vocado/core/services/voice_service.dart' as _i231;
@@ -35,6 +36,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i231.VoiceService>(),
         gh<_i1043.SpeechService>(),
         gh<_i443.GeminiService>(),
+        gh<_i454.SupabaseClient>(),
       ),
     );
     gh.lazySingleton<_i877.VoiceTaskRepositoryDomain>(

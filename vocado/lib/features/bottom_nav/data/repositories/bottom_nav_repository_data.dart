@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:vocado/core/errors/network_exceptions.dart';
@@ -10,13 +9,12 @@ import 'package:vocado/features/bottom_nav/data/models/bottom_nav_model.dart';
 import 'package:vocado/features/bottom_nav/domain/repositories/bottom_nav_repository_domain.dart';
 
 @LazySingleton(as: BottomNavRepositoryDomain)
-class BottomNavRepositoryData implements BottomNavRepositoryDomain{
+class BottomNavRepositoryData implements BottomNavRepositoryDomain {
   final BaseBottomNavRemoteDataSource remoteDataSource;
-
 
   BottomNavRepositoryData(this.remoteDataSource);
 
-@override
+  @override
   Future<Result<BottomNavEntity, Failure>> getBottomNav() async {
     try {
       final response = await remoteDataSource.getBottomNav();

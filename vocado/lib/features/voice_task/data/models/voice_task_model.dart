@@ -30,3 +30,16 @@ extension VoiceTaskMapper on VoiceTaskModel {
     );
   }
 }
+
+extension VoiceTaskEntityMapper on VoiceTaskEntity {
+  VoiceTaskModel toModel() {
+    return VoiceTaskModel(
+      title: title,
+      description: description,
+      assignedTo: assignedTo,
+      assignedBy: assignedBy,
+      deadline: deadline,
+      status: status,
+    );
+  }
+}

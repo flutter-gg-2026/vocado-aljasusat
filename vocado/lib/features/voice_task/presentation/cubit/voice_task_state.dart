@@ -22,6 +22,7 @@ class VoiceTaskSuccessState extends VoiceTaskState {
   @override
   List<Object?> get props => [task];
 }
+class VoiceTaskSavedState extends VoiceTaskState {}
 
 class VoiceTaskErrorState extends VoiceTaskState {
   final String message;

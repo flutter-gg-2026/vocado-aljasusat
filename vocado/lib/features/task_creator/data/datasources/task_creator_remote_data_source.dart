@@ -24,18 +24,23 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
   @override
   Future<List<TaskCreatorModel>> getTaskCreator() async {
     try {
+      final session = _supabase.auth.currentSession;
+      if (session == null || session.isExpired) {
+        throw Exception('Invalid token');
+      }
+
       final response = await _supabase
           .from('task')
           .select('''
-            id,
-            name,
-            status,
-            due_date,
-            user_id,
-            assigned_by,
-            description,
-            users(name)
-          ''')
+      id,
+      name,
+      status,
+      due_date,
+      user_id,
+      assigned_by,
+      description,
+      users!tasks_user_id_fkey(name)
+    ''')
           .order('id', ascending: false);
 
       final today = DateTime.now();
@@ -71,16 +76,18 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
       return response.map<TaskCreatorModel>((json) {
         final data = Map<String, dynamic>.from(json);
 
-        data['assignee_name'] = data['users']?['name'] ?? data['assigned_by'];
+        data['assignee_name'] =
+            data['users']?['name'] ?? data['assigned_by'] ?? '';
 
         data['status'] ??= 'Pending';
         data['due_date'] ??= '';
-        data['user_id'] ??= '';
+        data['id'] ??= '';
         data['name'] ??= '';
 
         return TaskCreatorModel.fromJson(data);
       }).toList();
     } catch (error) {
+      print('TASK CREATOR ERROR: $error');
       throw FailureExceptions.getException(error);
     }
   }
@@ -118,14 +125,16 @@ class TaskCreatorRemoteDataSource implements BaseTaskCreatorRemoteDataSource {
   @override
   Future<String> getCurrentUserName() async {
     try {
-      final user = _supabase.auth.currentUser;
-
-      if (user == null) return 'User';
+      final session = _supabase.auth.currentSession;
+      if (session == null || session.isExpired) {
+        throw Exception('Invalid token');
+      }
+      final user = session.user;
 
       final response = await _supabase
           .from('users')
           .select('name')
-          .eq('user_id', user.id)
+          .eq('id', user.id)
           .single();
 
       return response['name'] ?? 'User';
