@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../presentation/cubit/task_viewer_cubit.dart';
+import 'package:gap/gap.dart';
+import 'package:vocado/core/theme/app_colors.dart';
+import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 
 class TopTaskCard extends StatelessWidget {
   final int id;
@@ -18,14 +20,23 @@ class TopTaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final statuses = [
+      'Pending',
+      'In Progress',
+      'Completed',
+      'Late',
+    ];
+
     return SizedBox(
       width: 300,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white.withAlpha(8),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white.withAlpha(10)),
+          color: AppColors.cardBackground.withValues(alpha: 0.35),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: AppColors.borderLight.withValues(alpha: 0.35),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,31 +45,59 @@ class TopTaskCard extends StatelessWidget {
               title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.textMain,
                 fontWeight: FontWeight.bold,
+                fontSize: 16,
               ),
             ),
-            const SizedBox(height: 6),
-            Text(date, style: const TextStyle(color: Colors.white70)),
-            const SizedBox(height: 10),
+            const Gap(6),
+            Text(
+              date,
+              style: TextStyle(
+                color: AppColors.textMain.withValues(alpha: 0.65),
+              ),
+            ),
+            const Spacer(),
             DropdownButtonFormField<String>(
-              initialValue: status,
+              initialValue: statuses.contains(status) ? status : null,
               isExpanded: true,
-              dropdownColor: const Color(0xFF1E1E1E),
-              style: const TextStyle(color: Colors.white),
-              items: const [
-                DropdownMenuItem(value: "Pending", child: Text("Pending")),
-                DropdownMenuItem(
-                  value: "In Progress",
-                  child: Text("In Progress"),
+              dropdownColor: AppColors.background,
+              iconEnabledColor: AppColors.textMain,
+              style: TextStyle(color: AppColors.textMain),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: AppColors.cardBackground.withValues(alpha: 0.25),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 10,
                 ),
-                DropdownMenuItem(value: "Completed", child: Text("Completed")),
-                DropdownMenuItem(value: "Late", child: Text("Late")),
-              ],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(
+                    color: AppColors.borderLight.withValues(alpha: 0.3),
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(
+                    color: AppColors.borderLight.withValues(alpha: 0.3),
+                  ),
+                ),
+              ),
+              items: statuses.map((status) {
+                return DropdownMenuItem(
+                  value: status,
+                  child: Text(status),
+                );
+              }).toList(),
               onChanged: (value) {
                 if (value == null) return;
-                context.read<TaskViewerCubit>().updateStatus(id, value);
+
+                context.read<TaskViewerCubit>().updateStatus(
+                      id: id,
+                      status: value,
+                    );
               },
             ),
           ],

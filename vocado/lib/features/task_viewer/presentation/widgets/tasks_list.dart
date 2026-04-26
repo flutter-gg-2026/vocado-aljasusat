@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_state.dart';
 import 'package:vocado/features/task_viewer/presentation/widgets/task_item.dart';
 
 class TaskList extends StatelessWidget {
-  final TaskStatus filter;
+  final String filter;
 
   const TaskList({super.key, required this.filter});
 
@@ -17,25 +18,25 @@ class TaskList extends StatelessWidget {
           final tasks = context.read<TaskViewerCubit>().filterTasks(filter);
 
           if (tasks.isEmpty) {
-            return const Center(child: Text("No tasks"));
+            return Center(
+              child: Text(
+                'No tasks',
+                style: TextStyle(
+                  color: AppColors.textMain.withValues(alpha: 0.6),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            );
           }
 
           return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             itemCount: tasks.length,
-            itemBuilder: (_, i) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 6,
-                ),
-                child: TaskItem(task: tasks[i]),
-              );
+            itemBuilder: (context, index) {
+              return TaskItem(task: tasks[index]);
             },
           );
-        }
-
-        if (state is TaskLoading) {
-          return const Center(child: CircularProgressIndicator());
         }
 
         return const SizedBox();

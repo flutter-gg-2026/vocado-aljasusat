@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit.dart';
+import 'package:sizer/sizer.dart';
+import 'package:vocado/core/theme/app_colors.dart';
 import 'package:vocado/features/task_viewer/presentation/widgets/tasks_list.dart';
 
 class TaskTabs extends StatelessWidget {
@@ -10,22 +11,29 @@ class TaskTabs extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Column(
+        mainAxisSize: .min,
         children: [
-          const TabBar(
-            tabs: [
-              Tab(text: "Pending"),
-              Tab(text: "In Progress"),
-              Tab(text: "Completed"),
-              Tab(text: "Late"),
+          TabBar(
+            isScrollable: true,
+            labelColor: AppColors.textMain,
+            unselectedLabelColor: AppColors.textMain.withValues(alpha: 0.5),
+            indicatorColor: AppColors.textMain,
+            tabs: const [
+              Tab(text: 'Pending'),
+              Tab(text: 'In Progress'),
+              Tab(text: 'Completed'),
+              Tab(text: 'Late'),
             ],
           ),
-          Expanded(
+      
+          SizedBox(
+            height: 70.h,
             child: TabBarView(
               children: [
-                TaskList(filter: TaskStatus.Pending),
-                TaskList(filter: TaskStatus.InProgress),
-                TaskList(filter: TaskStatus.Completed),
-                TaskList(filter: TaskStatus.Late),
+                TaskList(filter: 'Pending'),
+                TaskList(filter: 'In Progress'),
+                TaskList(filter: 'Completed'),
+                TaskList(filter: 'Late'),
               ],
             ),
           ),

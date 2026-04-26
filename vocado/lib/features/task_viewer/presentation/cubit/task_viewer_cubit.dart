@@ -4,13 +4,11 @@ import 'package:vocado/features/task_viewer/domain/entities/task_entity.dart';
 import 'package:vocado/features/task_viewer/domain/use_cases/task_viewer_use_case.dart';
 import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_state.dart';
 
-
-
 @injectable
 class TaskViewerCubit extends Cubit<TaskViewerState> {
   final TaskUseCase useCase;
 
-  TaskViewerCubit(this.useCase) : super(TaskInitial()) ;
+  TaskViewerCubit(this.useCase) : super(TaskInitial());
 
   List<TaskEntity> allTasks = [];
 
@@ -22,59 +20,46 @@ class TaskViewerCubit extends Cubit<TaskViewerState> {
     result.when(
       (success) {
         allTasks = success;
-        emit(TaskLoaded(tasks: success));
+
+        emit(TaskLoaded(tasks: allTasks));
       },
-      (error) {
-        emit(TaskError());
+      (failure) {
+        emit(TaskError(message: failure.message));
       },
     );
   }
 
-  Future<void> updateStatus(int id, String status) async {
-    await useCase.updateStatus(id, status);
+  Future<void> updateStatus({required int id, required String status}) async {
+    final result = await useCase.updateStatus(id: id, status: status);
 
-    final updated = allTasks.map((task) {
-      if (task.id == id) {
-        return TaskEntity(
-          id: task.id,
-          title: task.title,
-          description: task.description,
-          assignedBy: task.assignedBy,
-          deadline: task.deadline,
-          status: status,
-        );
-      }
-      return task;
-    }).toList();
+    result.when(
+      (success) {
+        allTasks = allTasks.map((task) {
+          if (task.id == id) {
+            return TaskEntity(
+              id: task.id,
+              title: task.title,
+              description: task.description,
+              assignedBy: task.assignedBy,
+              deadline: task.deadline,
+              status: status,
+            );
+          }
 
-    allTasks = updated;
-    emit(TaskLoaded(tasks: updated));
+          return task;
+        }).toList();
+
+        emit(TaskLoaded(tasks: allTasks));
+      },
+      (failure) {
+        emit(TaskError(message: failure.message));
+      },
+    );
   }
 
-  List<TaskEntity> filterTasks(TaskStatus filter) {
-    final now = DateTime.now();
-
+  List<TaskEntity> filterTasks(String status) {
     return allTasks.where((task) {
-      final isLate = task.deadline.isBefore(now);
-      final isCompleted = task.status == "Completed";
-      final isInProgress = task.status == "In Progress";
-      final isPending = task.status == "Pending";
-
-      switch (filter) {
-        case TaskStatus.Pending:
-          return isPending;
-
-        case TaskStatus.InProgress:
-          return isInProgress && !isLate;
-
-        case TaskStatus.Completed:
-          return isCompleted;
-
-        case TaskStatus.Late:
-          return isLate && !isCompleted;
-      }
+      return task.status == status;
     }).toList();
   }
 }
-
-enum TaskStatus { Pending, InProgress, Completed, Late }
