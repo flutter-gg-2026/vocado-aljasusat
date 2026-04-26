@@ -12,7 +12,7 @@ import 'package:vocado/features/task_viewer/presentation/cubit/task_viewer_cubit
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.auth,
+    initialLocation: Routes.taskViewer,
     routes: [
       GoRoute(
         path: Routes.splash,
