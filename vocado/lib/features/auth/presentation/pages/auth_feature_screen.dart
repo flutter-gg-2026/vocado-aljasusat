@@ -23,10 +23,10 @@ class AuthFeatureScreen extends HookWidget {
     final cubit = context.read<AuthCubit>();
 
     final emailLoginController = useTextEditingController(
-      text: 'amaal0088@gmail.com',
+      text: 'layanalsubie@gmail.com',
     );
     final passwordLoginController = useTextEditingController(
-      text: 'Amaal0852@',
+      text: 'Asdfg09123',
     );
 
 // amaal0088@gmail.com
